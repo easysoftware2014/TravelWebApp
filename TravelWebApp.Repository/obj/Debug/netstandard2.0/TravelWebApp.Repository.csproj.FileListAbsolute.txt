@@ -1,0 +1,12 @@
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\bin\Debug\netstandard2.0\TravelWebApp.Repository.deps.json
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\bin\Debug\netstandard2.0\TravelWebApp.Repository.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\bin\Debug\netstandard2.0\TravelWebApp.Repository.pdb
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\bin\Debug\netstandard2.0\TravelWebApp.Domain.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\bin\Debug\netstandard2.0\TravelWebApp.Domain.pdb
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.csprojAssemblyReference.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.csproj.CoreCompileInputs.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.AssemblyInfoInputs.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.AssemblyInfo.cs
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.csproj.CopyComplete
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Repository\obj\Debug\netstandard2.0\TravelWebApp.Repository.pdb

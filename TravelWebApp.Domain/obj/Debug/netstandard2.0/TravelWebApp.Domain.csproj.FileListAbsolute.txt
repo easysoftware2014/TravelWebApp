@@ -1,0 +1,9 @@
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\bin\Debug\netstandard2.0\TravelWebApp.Domain.deps.json
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\bin\Debug\netstandard2.0\TravelWebApp.Domain.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\bin\Debug\netstandard2.0\TravelWebApp.Domain.pdb
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.csprojAssemblyReference.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.csproj.CoreCompileInputs.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.AssemblyInfoInputs.cache
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.AssemblyInfo.cs
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Domain\obj\Debug\netstandard2.0\TravelWebApp.Domain.pdb
