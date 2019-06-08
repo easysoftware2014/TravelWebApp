@@ -22,7 +22,7 @@ namespace TravelWebApp.Repository.Repository
 
         public User GetUserByEmailAndPassword(string username, string password)
         {
-            return FindBySpecification(new GetUserByEmailAndPasswordCriteria(username, password)).Single();
+            return FindBySpecification(new GetUserByEmailAndPasswordCriteria(username, password)).SingleOrDefault();
         }
     }
 }

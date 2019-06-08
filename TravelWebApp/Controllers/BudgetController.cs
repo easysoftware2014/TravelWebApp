@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
@@ -10,6 +7,7 @@ using TravelWebApp.Service.Services;
 
 namespace TravelWebApp.Controllers
 {
+    [Authorize]
     public class BudgetController : Controller
     {
         private readonly IBudgetService _budgetService;
@@ -23,19 +21,18 @@ namespace TravelWebApp.Controllers
             return View();
         }
 
-        // GET: Budget/Details/5
         public ActionResult Details(int id)
         {
             return View(" ");
         }
 
-        // GET: Budget/Create
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(BudgetModel model)
         {
             try
@@ -64,13 +61,11 @@ namespace TravelWebApp.Controllers
             }
         }
 
-        // GET: Budget/Edit/5
         public ActionResult Edit(int id)
         {
             return View(" ");
         }
 
-        // POST: Budget/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {

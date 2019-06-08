@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TravelAgencyApp.Service.Contracts;
 using TravelWebApp.Repository.Contracts;
 using TravelWebApp.Repository.Repository;
+using TravelWebApp.Service.Contracts;
 
 namespace TravelWebApp.Service.Services
 {
@@ -17,6 +17,11 @@ namespace TravelWebApp.Service.Services
         public long Save(T entity)
         {
             return _eRepository.AddEntity(entity);
+        }
+
+        public void SaveOrUpdate(T entity)
+        {
+            _eRepository.SaveOrUpdate(entity);
         }
 
         public void Update(T entity)
