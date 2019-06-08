@@ -18,8 +18,8 @@ namespace TravelWebApp.Repository.Criteria
         public ICriteria Criteria(ISession session)
         {
             var criteria = session.CreateCriteria(typeof(User));
-            criteria.Add(Restrictions.Eq("email", _email));
-            criteria.Add(Restrictions.Eq("password", _password));
+            criteria.Add(Restrictions.Eq("Email", _email));
+            criteria.Add(Restrictions.Eq("Password", _password));
 
             return criteria;
         }

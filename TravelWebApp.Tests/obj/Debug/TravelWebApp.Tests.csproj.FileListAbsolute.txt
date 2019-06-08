@@ -14,6 +14,10 @@ C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\Newtonsoft.Json.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\NHibernate.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\Remotion.Linq.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\Remotion.Linq.EagerFetching.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Security.AccessControl.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Security.Permissions.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Security.Principal.Windows.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Web.Helpers.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Web.Mvc.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Web.Razor.dll
@@ -23,8 +27,8 @@ C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Web.WebPages.Razor
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\System.Web.Optimization.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.Service.dll
-C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\WebGrease.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.Domain.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\WebGrease.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.Repository.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.pdb
 C:\WorkSpace\TravelWebApp\TravelWebApp.Tests\bin\Debug\TravelWebApp.dll.config

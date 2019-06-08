@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using NHibernate;
 using TravelWebApp.Repository.Contracts;
@@ -45,10 +46,12 @@ namespace TravelWebApp.Repository.Repository
 
         public T Entity(long id)
         {
-            var entity = _session.Load<T>(id);
-            _session.SessionFactory.Close();
+            return _session.Get<T>(Convert.ToInt64(id));
 
-            return entity;
+        }
+        public void SaveOrUpdate(T item)
+        {
+            _session.SaveOrUpdate(item);
         }
         public IList<T> FindBySpecification(ICriteriaSpecification<T> specification)
         {

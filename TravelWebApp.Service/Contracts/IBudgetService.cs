@@ -1,5 +1,4 @@
-﻿using TravelAgencyApp.Service.Contracts;
-using TravelWebApp.Domain.Entities;
+﻿using TravelWebApp.Domain.Entities;
 
 namespace TravelWebApp.Service.Contracts
 {

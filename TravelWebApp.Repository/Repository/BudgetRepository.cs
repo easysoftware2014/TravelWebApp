@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using NHibernate;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Repository.Contracts;

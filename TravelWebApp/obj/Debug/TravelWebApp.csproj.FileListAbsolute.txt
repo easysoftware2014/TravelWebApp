@@ -56,6 +56,10 @@ C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Newtonsoft.Json.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\NHibernate.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Remotion.Linq.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Remotion.Linq.EagerFetching.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Configuration.ConfigurationManager.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Security.AccessControl.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Security.Permissions.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Security.Principal.Windows.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.Helpers.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.Mvc.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.Optimization.dll
@@ -63,10 +67,11 @@ C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.Razor.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.WebPages.Deployment.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.WebPages.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.WebPages.Razor.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Domain.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Service.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\WebGrease.dll
-C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Domain.dll
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Repository.dll
+C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Domain.pdb
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Service.pdb
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Antlr3.Runtime.xml
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\FluentNHibernate.xml
@@ -83,7 +88,6 @@ C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.WebPages.Deployment.xml
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\System.Web.WebPages.Razor.xml
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Newtonsoft.Json.xml
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Domain.pdb
 C:\WorkSpace\TravelWebApp\TravelWebApp\bin\TravelWebApp.Repository.pdb
 C:\WorkSpace\TravelWebApp\TravelWebApp\obj\Debug\TravelWebApp.csprojAssemblyReference.cache
 C:\WorkSpace\TravelWebApp\TravelWebApp\obj\Debug\TravelWebApp.csproj.CoreCompileInputs.cache

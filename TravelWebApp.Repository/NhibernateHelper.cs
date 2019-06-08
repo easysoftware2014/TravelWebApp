@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Cfg;
+﻿using System.Configuration;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using TravelWebApp.Domain.Mapping;
@@ -8,8 +9,7 @@ namespace TravelWebApp.Repository
     public class NhibernateHelper
     {
         private static ISessionFactory _sessionFactory;
-
-        private static ISessionFactory SessionFactory
+       private static ISessionFactory SessionFactory
         {
             get
             {
@@ -24,7 +24,7 @@ namespace TravelWebApp.Repository
 
         private static void InitializeSessionFactory()
         {
-            var connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TravelAgency; Server=.";
+            var connectionString = ConfigurationManager.ConnectionStrings["connection_string"].ToString();
 
             _sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2012

@@ -1,5 +1,4 @@
-﻿using TravelAgencyApp.Service.Contracts;
-using TravelWebApp.Domain.Entities;
+﻿using TravelWebApp.Domain.Entities;
 using TravelWebApp.Repository.Contracts;
 using TravelWebApp.Repository.Repository;
 using TravelWebApp.Service.Contracts;
