@@ -24,27 +24,6 @@
                 <h4 class="modal-title">Online Booking Form</h4>
             </div>
             <div class="modal-body">
-                @*<form role="form">
-            <div class="form-group">
-                <label for="emailAddress">Email address</label>
-                <input id="emailAddress" type="email" class="form-control input-lg" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" class="form-control input-lg" placeholder="Password">
-            </div>
-            <div class="form-group">
-                    <label for="country">Which country do you want to travel?</label>
-                    <select class="form-control" id="country">
-                        <option>Australia</option>
-                        <option>Bangladesh</option>
-                        <option>England</option>
-                        <option>France</option>
-                        <option>U.S.A</option>
-                    </select>
-                </div>
-
-        </form>*@
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         @Html.ActionLink("Login", "Login", new { }, new { @class = "btn btn-primary" })
@@ -55,10 +34,19 @@
                 </div>
             </div>
             <div class="modal-footer">
-              
+                <div id="signalR_message"></div>
                 @*<input type="submit" class="btn confirm-btn" value="Confirm">*@
             </div>
         </div>
     </div>
 </div>
 <!-- end:booking -->
+@*<script src="../../Scripts/jquery-1.10.2.js"></script>*@
+
+@section scripts
+{
+    <script src="~/Scripts/SignalR.js">
+    </script>
+}
+
+

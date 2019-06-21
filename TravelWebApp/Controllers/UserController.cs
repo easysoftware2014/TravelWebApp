@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
+using Remotion.Linq.Clauses.ResultOperators;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
 using TravelWebApp.Repository;
@@ -30,7 +28,7 @@ namespace TravelWebApp.Controllers
             if (Session["User"] == null)
                 return RedirectToAction("Login", model);
 
-            return View(" ", model);
+            return RedirectToAction("Login");
         }
         public ActionResult Login(string returnUrl)
         {
@@ -69,11 +67,28 @@ namespace TravelWebApp.Controllers
                     {
                         Session["User"] = user;
                         FormsAuthentication.SetAuthCookie(user.Name, false);
+                        var response = Response;
+
+                        var ticket = new FormsAuthenticationTicket(1,
+                            user.Name,
+                            DateTime.Now,
+                            DateTime.Now.AddDays(30),
+                            true,
+                            user.Id.ToString(),
+                            FormsAuthentication.FormsCookiePath);
+                        // Encrypt the ticket.
+                        var encTicket = FormsAuthentication.Encrypt(ticket);
+                        // Create the cookie.
+                        response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
 
                         if (Url.IsLocalUrl(decodedUrl))
                         {
-                            return Redirect(decodedUrl);
+                            if(!string.IsNullOrEmpty(decodedUrl))
+                                return Redirect(decodedUrl);
                         }
+
+                        var userModel = new UserModel(user);
+                        return RedirectToAction("Index","BookingManagement");
                     }
                     else
                     {
@@ -87,8 +102,6 @@ namespace TravelWebApp.Controllers
                     return View(model);
                 }
 
-                return View(model);
-
             }
             catch (Exception e)
             {
@@ -97,16 +110,20 @@ namespace TravelWebApp.Controllers
             }
 
         }
+        [Authorize]
+        public ActionResult UserAdmin()
+        {
+            return View();
+        }
 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Budget");
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult Register()
         {
-
             return View();
         }
         [HttpPost]
@@ -132,6 +149,7 @@ namespace TravelWebApp.Controllers
                     Password = password,
                     PasswordHash = passwordHash
                 };
+
                 role.CreatedAt = DateTime.Now;
                 role.ModifiedAt = DateTime.Now;
 

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Security;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
 using TravelWebApp.Service.Contracts;
@@ -18,7 +20,24 @@ namespace TravelWebApp.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            var model = new List<BudgetModel>();
+
+            if (authCookie != null)
+            {
+
+                var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                var id = Convert.ToInt32(authTicket?.UserData);
+                var budget = _budgetService.GetBudgetByUserId(id);
+
+                if (budget != null)
+                {
+                    model.Add(new BudgetModel(budget));
+                }
+                
+            }
+
+            return View(model);
         }
 
         public ActionResult Details(int id)
