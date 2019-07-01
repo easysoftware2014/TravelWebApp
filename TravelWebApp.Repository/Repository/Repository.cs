@@ -51,7 +51,11 @@ namespace TravelWebApp.Repository.Repository
         }
         public void SaveOrUpdate(T item)
         {
-            _session.SaveOrUpdate(item);
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.SaveOrUpdate(item);
+                transaction.Commit();
+            }
         }
         public IList<T> FindBySpecification(ICriteriaSpecification<T> specification)
         {

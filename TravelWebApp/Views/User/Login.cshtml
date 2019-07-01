@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/shared/_layout.cshtml";
+    Layout = "~/Views/shared/_TravelLayout.cshtml";
     var returnUrl = ViewBag.ReturnUrl != null ? ViewBag.ReturnUrl.ToString() : string.Empty;
     var errorMessage = Model != null ? Model.ErrorMessage : string.Empty;
 }
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,7 +46,3 @@
 <div>
     @Html.ActionLink("Log out", "Logout")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

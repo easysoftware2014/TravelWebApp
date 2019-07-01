@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Security;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
 using TravelWebApp.Service.Contracts;
@@ -11,19 +13,43 @@ namespace TravelWebApp.Controllers
     public class BudgetController : Controller
     {
         private readonly IBudgetService _budgetService;
+        private readonly IUserService _userService;
 
         public BudgetController()
         {
             _budgetService = new BudgetService();
+            _userService = new UserService();
         }
         public ActionResult Index()
         {
-            return View();
+            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            var model = new List<BudgetModel>();
+
+            if (authCookie != null)
+            {
+                var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                var id = Convert.ToInt32(authTicket?.UserData);
+                var user = _userService.Get(id);
+                Session["user"] = user;
+                var budget = _budgetService.GetBudgetByUserId(user);
+
+                if (budget != null)
+                {
+                    model.Add(new BudgetModel(budget));
+                }
+
+            }
+
+            return View(model);
         }
 
         public ActionResult Details(int id)
         {
-            return View(" ");
+
+            var budget = _budgetService.Get(id);
+            var model = new BudgetModel(budget);
+
+            return View(model);
         }
 
         public ActionResult Create()
@@ -37,13 +63,15 @@ namespace TravelWebApp.Controllers
         {
             try
             {
+
+                var user = Session["user"] as User;
+
                 var entity = new Budget
                 {
                     Amount = model.Amount,
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
-                    ValidTo = model.ValidTo,
-                    ValidFrom = model.ValidFrom
+                    User = user
                 };
 
                 _budgetService.Save(entity);
@@ -63,20 +91,39 @@ namespace TravelWebApp.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(" ");
+            var budget = _budgetService.Get(id);
+            var model = new BudgetModel(budget);
+
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(BudgetModel model)
         {
             try
             {
                 // TODO: Add update logic here
+                var id = model.Id;
+                var budget = _budgetService.Get(id);
+                var user = Session["user"] as User;
+                _budgetService.Delete(budget);
+
+                var newBudget = new Budget
+                {
+                    Amount = model.Amount,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now,
+                    User = user
+                };
+
+                _budgetService.SaveOrUpdate(newBudget);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                var message = e.Message;
                 return View(" ");
             }
         }
