@@ -15,24 +15,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Register</h4>
-            </div>
-            <div class="modal-body">
-                <input id="testing" value="Testing"/>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="sign_in" tabindex="-1" role="dialog" aria-labelledby="sign-in" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -41,29 +25,73 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <br/>
-                    <input type="email" class="form-control" id="username" required="required"/>
+                    <br />
+                    <input type="email" class="form-control" id="username" required="required" />
                 </div>
-                
-                <br/>
-                <label for="password">Password</label>
-                <br/>
-                <input type="password" class="form-control" id="password" required="required"/>
-                <br/>
-                <br/>
-                <input type="button" class="btn btn-success" id="btnSubmit" value="Search">
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <br />
+                    <input type="password" class="form-control" id="password" required="required" />
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-success" id="btnSubmit" value="Submit">
+                </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn text-center" data-toggle="modal" data-target="#register">Register</a>
+                <a href="#" class="btn text-center" data-toggle="modal" data-target="#registration">Register</a>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" style="font-size: large">Registration Form</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <br />
+                    <input type="text" class="form-control" id="name" required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <br />
+                    <input type="text" class="form-control" id="surname" required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number</label>
+                    <br />
+                    <input type="text" class="form-control" id="contactNumber" required="required" />
+                </div>
+                <h4 style="font-weight:lighter">Login Details:</h4>
+                <hr />
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <br />
+                    <input type="email" class="form-control" id="email" required="required" />
+                </div>
+                <div class="form-group">
+                    <label for="reg_password">Password</label>
+                    <br />
+                    <input type="password" class="form-control" id="reg_password" required="required" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-default" id="btnRegister" value="Register">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- begin:booking -->
 <div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="booking" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -89,21 +117,67 @@
     </div>
 </div>
 <!-- end:booking -->
-@*<script src="../../Scripts/jquery-1.10.2.js"></script>*@
 
 @section scripts
 {
     <script src="~/Scripts/SignalR.js">
     </script>
     <script type="text/javascript">
-        $("#btnSubmit").click(function() {
-            var data = {};
+        
+        $("#btnSubmit").click(function () {
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            var data = {
+                'username': username,
+                'password': password
+            };
+
             $.ajax({
                 type: "POST",
                 url: "user/login",
                 data: data,
-                success: function() {},
-                dataType: {}
+                success: function (result) {
+
+                    if (result.success === true) {
+
+                        window.location.href = "/bookingmanagement/";
+                    } else {
+                        alert("Incorrect combination of email and password, please reenter");
+                    }
+                },
+                dataType: "json"
+            });
+        });
+        $("#btnRegister").click(function () {
+            var name = $("#name").val();
+            var surname = $("#surname").val();
+            var contact = $("#contactNumber").val();
+            var username = $("#email").val();
+            var password = $("#reg_password").val();
+
+
+            var data = {
+                'email': username,
+                'password': password,
+                'name': name,
+                'surname': surname,
+                'contact': contact
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "user/register",
+                data: data,
+                success: function (result) {
+                    if (result.success === true) {
+
+                        window.location.href = "/bookingmanagement/";
+                    } else {
+                        alert("Incorrect combination of email and password, please reenter");
+                    }
+                },
+                dataType: "json"
             });
         });
 

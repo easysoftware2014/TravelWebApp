@@ -131,17 +131,25 @@ namespace TravelWebApp.Controllers
         // GET: Budget/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(" ");
+            var budget = _budgetService.Get(id);
+            var model = new BudgetModel(budget);
+
+            return View(model);
         }
 
         // POST: Budget/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                
+                var budget = _budgetService.Get(id);
 
+                if(budget != null)
+                    _budgetService.Delete(budget);
+                
                 return RedirectToAction("Index");
             }
             catch

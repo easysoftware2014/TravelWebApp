@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
     <link href="../../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../../assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -35,7 +34,7 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item active  ">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/BookingManagement">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
@@ -248,7 +247,6 @@
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap-material-design.min.js"></script>
     <script src="../../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <!-- Plugin for the momentJs  -->
     <script src="../../assets/js/plugins/moment.min.js"></script>
     <!--  Plugin for Sweet Alert -->
@@ -289,6 +287,7 @@
     <script src="../../assets/demo/demo.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
     <script src="~/signalr/js"></script>
+    @RenderSection("scripts", false)
     <script>
         $(document).ready(function () {
             $().ready(function () {
@@ -354,10 +353,7 @@
                         $sidebar.attr('data-background-color', new_color);
                     }
                 });
-                $("#budget-edit").click(function () {
-
-                });
-                //ayanda
+               
                 $('.fixed-plugin .img-holder').click(function () {
                     $full_page_background = $('.full-page-background');
 
