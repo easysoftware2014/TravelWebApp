@@ -1,29 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using NHibernate;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Repository.Contracts;
+using TravelWebApp.Repository.Criteria;
 
 namespace TravelWebApp.Repository.Repository
 {
     public class BudgetRepository : Repository<Budget>, IBudgetRepository
     {
-        private readonly NhibernateHelper _nhibernateHelper;
         public ISession Session { get; set; }
 
         public BudgetRepository()
         {
-            _nhibernateHelper = new NhibernateHelper();
-            Session = _nhibernateHelper.OpenSession();
+            var nhibernateHelper = new NhibernateHelper();
+            Session = nhibernateHelper.OpenSession();
         }
-        public Budget GetBudgetByUserId(long userId)
+        public Budget GetBudgetByUserId(User user)
         {
-            throw new System.NotImplementedException();
+            return FindBySpecification(new GetBudgetByUserIdCriteria(user)).SingleOrDefault();
         }
-
-        public IList<Budget> FindBySpecification(ICriteriaSpecification<Budget> specification)
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }
 }

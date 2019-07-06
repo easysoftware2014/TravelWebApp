@@ -13,9 +13,9 @@ namespace TravelWebApp.Service.Services
             _budgetRepository = new BudgetRepository();
         }
         
-        public Budget GetBudgetByUserId(long userId)
+        public Budget GetBudgetByUserId(User user)
         {
-            return _budgetRepository.GetBudgetByUserId(userId);
+            return _budgetRepository.GetBudgetByUserId(user);
         }
         
     }

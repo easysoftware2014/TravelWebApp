@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
+using Remotion.Linq.Clauses.ResultOperators;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
 using TravelWebApp.Repository;
@@ -20,7 +18,7 @@ namespace TravelWebApp.Controllers
         public UserController()
         {
             _userService = new UserService();
-            _roleService = new RoleService(); 
+            _roleService = new RoleService();
         }
         // GET: User
         public ActionResult Index(string returnUrl)
@@ -48,8 +46,8 @@ namespace TravelWebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Login(string username, string password, string returnUrl)
         {
 
             try
@@ -59,9 +57,9 @@ namespace TravelWebApp.Controllers
                 if (!string.IsNullOrEmpty(returnUrl))
                     decodedUrl = Server.UrlDecode(returnUrl);
 
-                var passwordHash = MD5Hasher.GetMd5Hash(model.Username);
-                var password = Encryption.Encrypt(model.Password);
-                var user = _userService.GetUserByCredentials(model.Username, password);
+                var passwordHash = MD5Hasher.GetMd5Hash(username);
+                var passwordNew = Encryption.Encrypt(password);
+                var user = _userService.GetUserByCredentials(username, passwordNew);
 
                 if (user != null)
                 {
@@ -69,26 +67,35 @@ namespace TravelWebApp.Controllers
                     {
                         Session["User"] = user;
                         FormsAuthentication.SetAuthCookie(user.Name, false);
+                        var response = Response;
+
+                        response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, SetCookie(user)));
 
                         if (Url.IsLocalUrl(decodedUrl))
                         {
-                            if(!string.IsNullOrEmpty(decodedUrl))
-                                return Redirect(decodedUrl);
+                            if (!string.IsNullOrEmpty(decodedUrl))
+                                return Json(decodedUrl);
                         }
 
                         var userModel = new UserModel(user);
-                        return RedirectToAction("Index","BookingManagement");
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+                        //return RedirectToAction("Index","BookingManagement");
                     }
                     else
                     {
-                        model.ErrorMessage = "Incorrect combination of email and password, please reenter";
-                        return View(model);
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+                        //model.ErrorMessage = "Incorrect combination of email and password, please reenter";
+                        //return View(model);
                     }
                 }
                 else
                 {
-                    model.ErrorMessage = "Incorrect combination of email and password, please reenter";
-                    return View(model);
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+                    //model.ErrorMessage = "Incorrect combination of email and password, please reenter";
+                    //return View(model);
                 }
 
             }
@@ -98,7 +105,24 @@ namespace TravelWebApp.Controllers
                 throw;
             }
 
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+
+        private string SetCookie(User user)
+        {
+            var ticket = new FormsAuthenticationTicket(1,
+                user.Name,
+                DateTime.Now,
+                DateTime.Now.AddDays(30),
+                true,
+                user.Id.ToString(),
+                FormsAuthentication.FormsCookiePath);
+            // Encrypt the ticket.
+            return FormsAuthentication.Encrypt(ticket);
+            // Create the cookie.
+            
+        }
+
         [Authorize]
         public ActionResult UserAdmin()
         {
@@ -116,26 +140,26 @@ namespace TravelWebApp.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(RegistrationModel model)
+        //[ValidateAntiForgeryToken]
+        public JsonResult Register(string email, string password, string name, string surname, string contact)
         {
 
             try
             {
-                var password = EncryptPassword(model.Password);
-                var passwordHash = MD5Hasher.GetMd5Hash(model.Email);
+                var newPassword = EncryptPassword(password);
+                var passwordHash = MD5Hasher.GetMd5Hash(email);
 
                 var role = _roleService.Get(1);
 
                 var user = new User
                 {
-                    ContactNumber = model.ContactNumber,
-                    Email = model.Email,
-                    Name = model.FirstName,
-                    Surname = model.LastName,
+                    ContactNumber = contact,
+                    Email = email,
+                    Name = name,
+                    Surname = surname,
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
-                    Password = password,
+                    Password = newPassword,
                     PasswordHash = passwordHash
                 };
 
@@ -146,8 +170,15 @@ namespace TravelWebApp.Controllers
                 var id = _userService.Save(user);
 
                 if (id > 0)
-                    return RedirectToAction("Login","User");
-                    
+                {
+                    Session["User"] = user;
+                    Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, SetCookie(user)));
+
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception e)
             {
@@ -155,7 +186,6 @@ namespace TravelWebApp.Controllers
                 throw;
             }
 
-            return View();
         }
 
         private string EncryptPassword(string modelPassword)
