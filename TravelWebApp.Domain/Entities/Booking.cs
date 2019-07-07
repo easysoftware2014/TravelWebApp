@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TravelWebApp.Domain.Entities
 {
@@ -14,5 +15,12 @@ namespace TravelWebApp.Domain.Entities
         public virtual int NoOfDays { get; set; }
         public virtual CabinClass CabinClass { get; set; }
         public virtual BookingType BookingType { get; set; }
+
+        public virtual IList<UserBooking> Bookings { get; set; }
+
+        public Booking()
+        {
+            Bookings = new List<UserBooking>();
+        }
     }
 }
