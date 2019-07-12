@@ -1,10 +1,284 @@
-﻿@model TravelWebApp.Models.BookingModel
+﻿@using FluentNHibernate.Utils
+@model TravelWebApp.Models.BookingModel
 
 @{
+    ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-    <div class="row">
+<h2>Booking</h2>
+<hr />
+<div class="row">
+    <div class="col-lg-4">
+        <button class="btn btn-outline-secondary" id="book_flight"><i class="fa fa-plane" aria-hidden="true"> Flight</i> </button>
+    </div>
+    <div class="col-lg-4">
+        <button class="btn btn-outline-primary" id="book_hotel"><i class="fa fa-hotel" aria-hidden="true"> Accommodation</i> </button>
+    </div>
+    <div class="col-lg-4">
+        <button class="btn btn-outline-success" id="book_car"><i class="fa fa-car" aria-hidden="true"> Transport</i> </button>
+    </div>
+</div>
+
+<div class="modal fade" id="booking-flight" tabindex="-1" role="dialog" aria-labelledby="budget-edit" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Flight search</h4>
+            </div>
+            <div class="modal-body">
+                @*<div class="form-horizontal">
+                    <div class="form-horizontal">*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="radio">
+                            <label><input type="radio" id="oneWayCheck" name="flight_flow" class="radio"> One way</label>
+                            <label><input type="radio" id="returnCheck" checked="checked" name="flight_flow" value="return" class="radio"> Return</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Departure" required="required">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" style="display: block" id="returnDate" class="form-control datepicker" placeholder="Return" required="required">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select id="destination" placeholder="Destination" class="form-control dropdown-backdrop">
+                                <option>select destination ...</option>
+                                <option>Gauteng</option>
+                                <option>Namibia</option>
+                                <option>Holand</option>
+                                <option>South Afria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control dropdown-backdrop">
+                        <option value="0">Adults</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control dropdown-backdrop">
+                        <option value="0">Children</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" id="search_flight" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"> Search </i></button>
+
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"> Close </i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="modal fade" id="booking-hotel" tabindex="-1" role="dialog" aria-labelledby="budget-edit" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Accommodation search</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Check in" required="required">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Check out" required="required">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select id="destination" placeholder="Destination" class="form-control dropdown-backdrop">
+                                <option>select destination ...</option>
+                                <option>Gauteng</option>
+                                <option>Namibia</option>
+                                <option>Holand</option>
+                                <option>South Afria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control dropdown-backdrop">
+                        <option value="0">Adults</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control dropdown-backdrop">
+                        <option value="0">Children</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" id="search_accommodation" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"> Search </i></button>
+
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"> Close </i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="booking-car" tabindex="-1" role="dialog" aria-labelledby="budget-edit" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Transport search</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Collection date" required="required">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Return date" required="required">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select id="from" placeholder="From" class="form-control dropdown-backdrop">
+                                <option>select departure ...</option>
+                                <option>Gauteng</option>
+                                <option>Namibia</option>
+                                <option>Holand</option>
+                                <option>South Afria</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select id="trans_destination" placeholder="Destination" class="form-control dropdown-backdrop">
+                                <option>select destination ...</option>
+                                <option>Gauteng</option>
+                                <option>Namibia</option>
+                                <option>Holand</option>
+                                <option>South Afria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" id="search_transport" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"> Search </i></button>
+
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"> Close </i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12"></div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+        
+        $('#book_flight').click(function () {
+            $('#booking-flight').modal('show');
+        });
+
+        $('#book_hotel').click(function () {
+            $('#booking-hotel').modal('show');
+        });
+
+        $('#search_flight').click(function() {
+            $.ajax({
+                type: "GET",
+                url: "bookingmanagement/booking",
+                success: function (result) {
+
+                    if (result.success === true) {
+
+                        window.location.href = "/bookingmanagement/";
+                    } else {
+                        alert("Incorrect combination of email and password, please reenter");
+                    }
+                },
+                dataType: "json"
+            });
+        });
+       
+        $('#book_car').click(function () {
+            $('#booking-car').modal('show');
+        });
+        $("input[type=radio]").click(function () {
+            $(this).prop('checked', true);
+
+            if ($(this)[0].value == "return") {
+                $('#returnDate').attr("style", "display: block;");
+            }
+            else
+                $('#returnDate').attr("style", "display: none;");
+        });
+
+    </script>
+}
+
+
+
+
+@*<div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
@@ -275,5 +549,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 

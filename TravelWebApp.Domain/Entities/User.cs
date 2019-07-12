@@ -26,9 +26,12 @@ namespace TravelWebApp.Domain.Entities
         public virtual string TemporaryPassword { get; set; }
         public virtual DateTime? TemporaryPasswordCreatedDate { get; set; }
 
+        public virtual IList<UserBooking> Bookings { get; set; }
+
         public User()
         {
             Roles = new List<UserRole>();
+            Bookings = new List<UserBooking>();
         }
         public User(RegistrationModel model)
         {

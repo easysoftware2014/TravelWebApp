@@ -21,6 +21,8 @@ namespace TravelWebApp.Domain.Mapping
             HasOne(x => x.Budget).Cascade.All().PropertyRef("User");
             //HasOne(x => x.Role).Constrained().;
             HasMany(x => x.Roles).AsBag().LazyLoad().KeyColumn("[user_id]").Cascade.All();
+            HasMany(x => x.Bookings).AsBag().LazyLoad().KeyColumn("[userid]").Cascade.All();
+             
         }
     }
 }

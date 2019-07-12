@@ -17,9 +17,9 @@ namespace TravelWebApp.Repository.Repository
             var nhibernateHelper = new NhibernateHelper();
             Session = nhibernateHelper.OpenSession();
         }
-        public Budget GetBudgetByUserId(long userId)
+        public Budget GetBudgetByUserId(User user)
         {
-            return FindBySpecification(new GetBudgetByUserIdCriteria(userId)).SingleOrDefault();
+            return FindBySpecification(new GetBudgetByUserIdCriteria(user)).SingleOrDefault();
         }
         
     }

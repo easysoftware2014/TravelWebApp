@@ -17,6 +17,7 @@
     <link href="../../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../../assets/demo/demo.css" rel="stylesheet" />
+    <link href="../../Content/plugins/jquery-datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
 </head>
 
 <body class="">
@@ -28,13 +29,13 @@
                 Tip 2: you can also add an image using data-image tag
             -->
             <div class="logo">
-                <a href="#" class="simple-text logo-normal">
+                <a href="/home" class="simple-text logo-normal">
                     Traveler
                 </a>
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="nav-item active  ">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/BookingManagement">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
@@ -141,34 +142,10 @@
             </div>
             <footer class="footer">
                 <div class="container-fluid">
-                    <nav class="float-left">
-                        <ul>
-                            <li>
-                                <a href="https://www.creative-tim.com">
-                                    Creative Tim
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://creative-tim.com/presentation">
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://blog.creative-tim.com">
-                                    Blog
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.creative-tim.com/license">
-                                    Licenses
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="copyright float-right">
+                    <div class="copyright float-right fixed-bottom" style="margin-left: -500px;">
                         &copy;
                         <script>document.write(new Date().getFullYear())</script>, made with <i class="material-icons">favorite</i> by
-                        <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+                        <a href="#" target="_blank">Ongayena Consultants</a> for a better web.
                     </div>
                 </div>
             </footer>
@@ -194,51 +171,6 @@
                         <div class="clearfix"></div>
                     </a>
                 </li>
-                <li class="header-title">Images</li>
-                <li class="active">
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../../assets/img/sidebar-1.jpg" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../../assets/img/sidebar-2.jpg" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../../assets/img/sidebar-3.jpg" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../../assets/img/sidebar-4.jpg" alt="">
-                    </a>
-                </li>
-                <li class="button-container">
-                    <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-                </li>
-                <!-- <li class="header-title">Want more components?</li>
-                    <li class="button-container">
-                        <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
-                          Get the pro version
-                        </a>
-                    </li> -->
-                <li class="button-container">
-                    <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
-                        View Documentation
-                    </a>
-                </li>
-                <li class="button-container github-star">
-                    <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-                </li>
-                <li class="header-title">Thank you for 95 shares!</li>
-                <li class="button-container text-center">
-                    <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
-                    <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
-                    <br>
-                    <br>
-                </li>
             </ul>
         </div>
     </div>
@@ -247,6 +179,7 @@
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap-material-design.min.js"></script>
     <script src="../../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../Content/plugins/jquery-datepicker/jquery-ui.js"></script>
     <!-- Plugin for the momentJs  -->
     <script src="../../assets/js/plugins/moment.min.js"></script>
     <!--  Plugin for Sweet Alert -->
@@ -287,6 +220,7 @@
     <script src="../../assets/demo/demo.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
     <script src="~/signalr/js"></script>
+    @RenderSection("scripts", false)
     <script>
         $(document).ready(function () {
             $().ready(function () {
@@ -352,7 +286,7 @@
                         $sidebar.attr('data-background-color', new_color);
                     }
                 });
-                //ayanda
+
                 $('.fixed-plugin .img-holder').click(function () {
                     $full_page_background = $('.full-page-background');
 

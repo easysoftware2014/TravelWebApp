@@ -7,15 +7,15 @@ namespace TravelWebApp.Repository.Criteria
 {
     public class GetBudgetByUserIdCriteria : ICriteriaSpecification<Budget>
     {
-        private readonly long _id;
-        public GetBudgetByUserIdCriteria(long id)
+        private readonly User _user;
+        public GetBudgetByUserIdCriteria(User user)
         {
-            _id = id;
+            _user = user;
         }
         public ICriteria Criteria(ISession session)
         {
             var criteria = session.CreateCriteria(typeof(Budget));
-            criteria.Add(Restrictions.Eq("Id", _id));
+            criteria.Add(Restrictions.Eq("User", _user));
 
             return criteria;
         }

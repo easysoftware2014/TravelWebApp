@@ -6,6 +6,6 @@ namespace TravelWebApp.Repository.Contracts
     public interface IBudgetRepository : IRepository<Budget>
     {
         ISession Session { get; set; }
-        Budget GetBudgetByUserId(long userId);
+        Budget GetBudgetByUserId(User user);
     }
 }

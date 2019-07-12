@@ -1,0 +1,75 @@
+﻿@model TravelWebApp.Models.BudgetModel
+
+@{
+    ViewBag.Title = "Budget";
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Budget</h2>
+
+
+@using (Html.BeginForm("Delete", "Budget", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal fade" id="budget-delete" tabindex="-1" role="dialog" aria-labelledby="budget-delete" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                       Are you sure you want to delete this budget?
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger" /> | <button type="button" id="modalDismiss" class="btn btn-default">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@using (Html.BeginForm("Edit", "Budget", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <h4>Update</h4>
+            <br />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }*@
+
+<div>
+    @Html.ActionLink("Back", "Index", "Budget")
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#budget-delete').modal('show');
+        });
+
+        $(document).ready(function () {
+            $('#modalDismiss').click(function() {
+                window.location.href = "/budget/";
+            });
+        });
+
+    </script>
+}
