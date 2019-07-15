@@ -222,10 +222,9 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12"></div>
-</div>
+<div class="container">
 
+</div>
 
 @section scripts
 {
@@ -233,7 +232,7 @@
         $('.datepicker').datepicker({
             dateFormat: 'dd-mm-yy'
         });
-        
+
         $('#book_flight').click(function () {
             $('#booking-flight').modal('show');
         });
@@ -242,12 +241,12 @@
             $('#booking-hotel').modal('show');
         });
 
-        $('#search_flight').click(function() {
+        $('#search_flight').click(function () {
             $.ajax({
                 type: "GET",
-                url: "bookingmanagement/booking",
+                url: "bookingmanagement/getflightlist",
                 success: function (result) {
-
+                    console.log(results);
                     if (result.success === true) {
 
                         window.location.href = "/bookingmanagement/";
@@ -258,7 +257,38 @@
                 dataType: "json"
             });
         });
-       
+        $('#search_accommodation').click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/bookingmanagement/GetPropertyList",
+                success: function (obj) {
+                    $.each(obj.Properties.Result,
+                        function (index, value) {
+                            //console.log(value);
+                            console.log(value.AvailableRooms);
+
+                            $('.container').append(
+                                `<div class="card">
+                                    <div class="card-header card-header-primary">
+                                        <h4 class="card-title ">${value.HotelName}</h4>
+                                        <p class="card-category"> ${value.Review}</p>
+                                    </div>
+                                  <div class="card-body">
+                                    <div class="thumbnail">
+                                        <img src="${value.PhotoUrl}" class="img-rounded img-responsive"></img>                                       
+                                    </div>                                   
+                                        <p>${value.MinimumPrice}</p>                                    
+                                 </div>
+                            </div>`
+                            );
+
+
+                        });
+                },
+                dataType: "json"
+            });
+        });
+
         $('#book_car').click(function () {
             $('#booking-car').modal('show');
         });
@@ -267,8 +297,7 @@
 
             if ($(this)[0].value == "return") {
                 $('#returnDate').attr("style", "display: block;");
-            }
-            else
+            } else
                 $('#returnDate').attr("style", "display: none;");
         });
 

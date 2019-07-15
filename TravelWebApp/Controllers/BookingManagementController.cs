@@ -57,33 +57,30 @@ namespace TravelWebApp.Controllers
             return View("Notification", new NotificationsModel());
         }
 
-        public JsonResult Booking()
+        public ActionResult Booking()
         {
             var model = new BookingModel();
-            var url = "https://apidojo-booking-v1.p.rapidapi.com/properties/list?price_filter_currencycode=USD&travel_purpose=leisure&categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&search_id=none&order_by=popularity&children_qty=2&languagecode=en-us&children_age=5%2C7&search_type=city&offset=0&dest_ids=-3712125&guest_qty=1&arrival_date=2019-07-13&departure_date=2019-07-15&room_qty=1";
+
+            return View("Bookings", model);
+
+        }
+
+        public JsonResult GetPropertyList()
+        {
+            var url = "https://apidojo-booking-v1.p.rapidapi.com/properties/list?price_filter_currencycode=USD&travel_purpose=leisure&categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&search_id=none&order_by=popularity&children_qty=2&languagecode=en-us&children_age=5%2C7&search_type=city&offset=0&dest_ids=-3712125&guest_qty=1&arrival_date=2019-08-13&departure_date=2019-08-15&room_qty=1";
 
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", "ca2d282acbmshdc149bd72e71e55p13aa6cjsn511e7a429b14");
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com");
-                var json =  client.GetStringAsync(url);
-                var results = JsonConvert.DeserializeObject<PropertyListModel>(json.Result);
-
-                var test = results;
+                var json = client.GetStringAsync(url);
+                var propertyList = JsonConvert.DeserializeObject<PropertyListModel>(json.Result);
 
                 return Json(new
                 {
-                    Bookings = model
+                    Properties = propertyList
                 }, JsonRequestBehavior.AllowGet);
             }
-            //var unirest = Unirest.get("https://apidojo-booking-v1.p.rapidapi.com/properties/list?price_filter_currencycode=USD&travel_purpose=leisure&categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&search_id=none&order_by=popularity&children_qty=2&languagecode=en-us&children_age=5%2C7&search_type=city&offset=0&dest_ids=-3712125&guest_qty=1&arrival_date=2019-07-13&departure_date=2019-07-15&room_qty=1")
-            //    .header("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com")
-            //    .header("X-RapidAPI-Key", "ca2d282acbmshdc149bd72e71e55p13aa6cjsn511e7a429b14")
-            //    .asJson<Booking>();
-
-            //var test = unirest;
-
-            
         }
 
     }
