@@ -68,7 +68,7 @@ namespace TravelWebApp.Controllers
         public JsonResult GetPropertyList()
         {
             var url = "https://apidojo-booking-v1.p.rapidapi.com/properties/list?price_filter_currencycode=USD&travel_purpose=leisure&categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&search_id=none&order_by=popularity&children_qty=2&languagecode=en-us&children_age=5%2C7&search_type=city&offset=0&dest_ids=-3712125&guest_qty=1&arrival_date=2019-08-13&departure_date=2019-08-15&room_qty=1";
-
+            //q=1.0&from=SGD&to=MYR
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", "ca2d282acbmshdc149bd72e71e55p13aa6cjsn511e7a429b14");

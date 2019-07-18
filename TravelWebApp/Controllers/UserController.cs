@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
 using Remotion.Linq.Clauses.ResultOperators;
 using TravelWebApp.Domain.Entities;
 using TravelWebApp.Models;
@@ -173,6 +178,25 @@ namespace TravelWebApp.Controllers
                 {
                     Session["User"] = user;
                     Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, SetCookie(user)));
+                    var emailContent = SendEmail(user.Email);
+                    var serializedObj = JsonConvert.SerializeObject(emailContent);
+
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(serializedObj);
+                    var byteContent = new ByteArrayContent(buffer);
+                    byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                    var uri = ConfigurationManager.AppSettings["RapidApiEmailEndpoint"];
+                    var apiKey = ConfigurationManager.AppSettings["RapidApiKey"];
+                    var apiEmailHost = ConfigurationManager.AppSettings["RapidApiEmailHost"];
+
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", apiKey);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", apiEmailHost);
+                        
+                        var response = client.PostAsync(uri, byteContent).Result;
+                        var content = response.Content.ReadAsStringAsync();
+                    }
 
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
@@ -186,6 +210,17 @@ namespace TravelWebApp.Controllers
                 throw;
             }
 
+        }
+
+        private Email SendEmail(string userEmail)
+        {
+            return new Email
+            {
+                recipient = "ayandapatrick@gmail.com",
+                message = "Welcome to api",
+                sender = "ayandapatrick@gmail.com",
+                subject = "Registration"
+            };
         }
 
         private string EncryptPassword(string modelPassword)

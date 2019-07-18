@@ -222,8 +222,8 @@
     </div>
 </div>
 
-<div class="container">
-
+<div class="row">
+    <div class="col-md-12"></div>
 </div>
 
 @section scripts
@@ -251,7 +251,7 @@
 
                         window.location.href = "/bookingmanagement/";
                     } else {
-                        alert("Incorrect combination of email and password, please reenter");
+                        alert("Sorry, we couldn't get any flights available");
                     }
                 },
                 dataType: "json"
@@ -261,13 +261,13 @@
             $.ajax({
                 type: "GET",
                 url: "/bookingmanagement/GetPropertyList",
+                dataType: "json",
                 success: function (obj) {
+                    $('#booking-hotel').modal('hide');
+                    
                     $.each(obj.Properties.Result,
                         function (index, value) {
-                            //console.log(value);
-                            console.log(value.AvailableRooms);
-
-                            $('.container').append(
+                            $('.col-md-12').append(
                                 `<div class="card">
                                     <div class="card-header card-header-primary">
                                         <h4 class="card-title ">${value.HotelName}</h4>
@@ -282,10 +282,9 @@
                             </div>`
                             );
 
-
                         });
-                },
-                dataType: "json"
+                }
+               
             });
         });
 
