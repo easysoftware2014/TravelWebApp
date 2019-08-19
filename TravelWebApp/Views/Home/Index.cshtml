@@ -4,7 +4,7 @@
 }
 
 
-<div class="call-to-action">
+@*<div class="call-to-action">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="modal fade" id="sign_in" tabindex="-1" role="dialog" aria-labelledby="sign-in" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -80,7 +80,7 @@
                     <input type="password" class="form-control" id="reg_password" required="required" />
                 </div>
 
-            </div>
+            </div>69
             <div class="modal-footer">
                 <input type="submit" class="btn btn-default" id="btnRegister" value="Register">
             </div>
@@ -120,70 +120,129 @@
 {
     <script src="~/Scripts/SignalR.js">
     </script>
+    
     <script type="text/javascript">
-        
-        $("#btnSubmit").click(function () {
-            var username = $("#username").val();
-            var password = $("#password").val();
+        $("#booking_search").click(function () {
 
-            var data = {
-                'username': username,
-                'password': password
-            };
+            var checkOut = $('#check_out_date').val();
+            var checkIn = $('#check_in_date').val();
+            var place = $('#search_place').val();
+            var priceLimit = $('#price_limit option:selected').text();
 
+            // '{"destination":"'+ place +'}'destination
+            //JSON.stringify({ 'employeeCustomerId': contactId, 'customerIds': customerIds })
             $.ajax({
-                type: "POST",
-                url: "user/login",
-                data: data,
-                success: function (result) {
+                type: "GET",
+                url: "/bookingmanagement/GetPropertyList/",
+                contentType: "application/json; charset=utf-8",
+                data: {destination: place},
+                dataType: "json",
+                success: function(obj) {
+                    $('#booking-hotel').modal('hide');
 
-                    if (result.success === true) {
+                    $.each(obj.Properties.Result,
+                        function(index, value) {
+                            $('.col-md-12').append(
+                                `<div class="card">
+                                    <div class="card-header card-header-primary">
+                                        <h4 class="card-title ">${value.HotelName}</h4>
+                                        <p class="card-category"> ${value.Review}</p>
+                                    </div>
+                                  <div class="card-body">
+                                    <div class="thumbnail">
+                                        <img src="${value.PhotoUrl
+                                }" class="img-rounded img-responsive"></img>                                       
+                                    </div>                                   
+                                        <p>${value.MinimumPrice}</p>                                    
+                                 </div>
+                            </div>`
+                            );
 
-                        window.location.href = "/bookingmanagement/";
-                    } else {
-                        alert("Incorrect combination of email and password, please reenter");
-                    }
-                },
-                dataType: "json"
+                        });
+                }
+
             });
+            
+            alert('CheckIn: '+checkIn + ' CheckOut: '+ checkOut + ' Limit: ' + priceLimit + ' Place: ' + place);
         });
-        $("#btnRegister").click(function () {
-            var name = $("#name").val();
-            var surname = $("#surname").val();
-            var contact = $("#contactNumber").val();
-            var username = $("#email").val();
-            var password = $("#reg_password").val();
-
-
-            var data = {
-                'email': username,
-                'password': password,
-                'name': name,
-                'surname': surname,
-                'contact': contact
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "user/register",
-                data: data,
-                success: function (result) {
-                    if (result.success === true) {
-
-                        window.location.href = "/bookingmanagement/";
-                    } else {
-                        alert("Incorrect combination of email and password, please reenter");
-                    }
-                },
-                dataType: "json"
-            });
-        });
-
-        $("#login").click(function() {
-            $('#sign_in').modal('show');
-        });
-
+        $("#search_plac").focus();
     </script>
+
+    @*<script type="text/javascript">
+            (function(d, sc, u) {
+                var s = d.createElement(sc), p = d.getElementsByTagName(sc)[0];
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = u + '?v=' + (+new Date());
+                p.parentNode.insertBefore(s,p);
+            })(document, 'script', '//aff.bstatic.com/static/affiliate_base/js/flexiproduct.js');
+        </script>
+
+
+        <script type="text/javascript">
+
+            $("#btnSubmit").click(function () {
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                var data = {
+                    'username': username,
+                    'password': password
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "user/login",
+                    data: data,
+                    success: function (result) {
+
+                        if (result.success === true) {
+
+                            window.location.href = "/bookingmanagement/";
+                        } else {
+                            alert("Incorrect combination of email and password, please reenter");
+                        }
+                    },
+                    dataType: "json"
+                });
+            });
+            $("#btnRegister").click(function () {
+                var name = $("#name").val();
+                var surname = $("#surname").val();
+                var contact = $("#contactNumber").val();
+                var username = $("#email").val();
+                var password = $("#reg_password").val();
+
+
+                var data = {
+                    'email': username,
+                    'password': password,
+                    'name': name,
+                    'surname': surname,
+                    'contact': contact
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "user/register",
+                    data: data,
+                    success: function (result) {
+                        if (result.success === true) {
+
+                            window.location.href = "/bookingmanagement/";
+                        } else {
+                            alert("Incorrect combination of email and password, please reenter");
+                        }
+                    },
+                    dataType: "json"
+                });
+            });
+
+            $("#login").click(function() {
+                $('#sign_in').modal('show');
+            });
+
+        </script>*@
 }
 
 

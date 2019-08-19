@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -11,7 +14,7 @@ using unirest_net.http;
 
 namespace TravelWebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class BookingManagementController : Controller
     {
         private readonly IUserService _userService;
@@ -64,15 +67,36 @@ namespace TravelWebApp.Controllers
             return View("Bookings", model);
 
         }
-
-        public JsonResult GetPropertyList()
+        [HttpGet]
+        public JsonResult GetPropertyList(string destination)
         {
-            var url = "https://apidojo-booking-v1.p.rapidapi.com/properties/list?price_filter_currencycode=USD&travel_purpose=leisure&categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&search_id=none&order_by=popularity&children_qty=2&languagecode=en-us&children_age=5%2C7&search_type=city&offset=0&dest_ids=-3712125&guest_qty=1&arrival_date=2019-08-13&departure_date=2019-08-15&room_qty=1";
-            //q=1.0&from=SGD&to=MYR
+            var propertyEndPoint = ConfigKeys.RapidApiBookingEndPoint();
+            var url = propertyEndPoint +
+                      "price_filter_currencycode=USD&" +
+                      "travel_purpose=leisure&" +
+                      "categories_filter=price%3A%3A9-40%2Cfree_cancellation%3A%3A1%2Cclass%3A%3A1%2Cclass%3A%3A0%2Cclass%3A%3A2&" +
+                      "search_id=none&" +
+                      "order_by=popularity&" +
+                      "children_qty=2&" +
+                      "languagecode=en-us&" +
+                      "children_age=5%2C7&" +
+                      "search_type=city&" +
+                      "offset=0&" +
+                      "dest_ids=" + GetDestinationId(destination)+"&" +
+                      "guest_qty=1&" +
+                      "arrival_date=2019-08-21&" +
+                      "departure_date=2019-08-27&" +
+                      "room_qty=1";
+            
+            var rapidApiKey = ConfigKeys.GetRapidApiKey();
+            var rapidApiHost = ConfigKeys.GetRapidApiHost();
+            
+
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", "ca2d282acbmshdc149bd72e71e55p13aa6cjsn511e7a429b14");
-                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", "apidojo-booking-v1.p.rapidapi.com");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", rapidApiKey);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", rapidApiHost);
+
                 var json = client.GetStringAsync(url);
                 var propertyList = JsonConvert.DeserializeObject<PropertyListModel>(json.Result);
 
@@ -83,5 +107,32 @@ namespace TravelWebApp.Controllers
             }
         }
 
+        public JsonResult GetFlightList()
+        {
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
+
+        private string GetDestinationId(string destination)
+        {
+            var apiKey = ConfigKeys.GetRapidApiKey();
+            var apiHost = ConfigKeys.GetRapidApiHost();
+            var languageCode = "en-us";
+            var place = destination;
+            var endPoint = string.Format("https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete?languagecode={0}&text={1}", languageCode, place);
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", apiKey);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", apiHost);
+
+                var json = client.GetStringAsync(endPoint);
+                var destinationModel = JsonConvert.DeserializeObject<List<DestinationModel>>(json.Result);
+
+                return destinationModel.First().DestinationId;
+
+            }
+
+            return string.Empty;
+        }
     }
 }

@@ -1389,7 +1389,7 @@
 	};
 
 	var defaults = $.fn.datepicker.defaults = {
-		autoclose: true,
+		autoclose: false,
 		beforeShowDay: $.noop,
 		calendarWeeks: false,
 		clearBtn: false,
@@ -1402,7 +1402,7 @@
 		minViewMode: 0,
 		multidate: false,
 		multidateSeparator: ',',
-		orientation: "top",
+		orientation: "auto",
 		rtl: false,
 		startDate: -Infinity,
 		startView: 0,

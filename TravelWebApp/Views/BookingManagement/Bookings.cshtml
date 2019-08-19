@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select id="destination" placeholder="Destination" class="form-control dropdown-backdrop">
+                            <select id="flight_destination" placeholder="Destination" class="form-control dropdown-backdrop">
                                 <option>select destination ...</option>
                                 <option>Gauteng</option>
                                 <option>Namibia</option>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <select id="destination" placeholder="Destination" class="form-control dropdown-backdrop">
+                            <select id="property_destination" placeholder="Destination" class="form-control dropdown-backdrop">
                                 <option>select destination ...</option>
                                 <option>Gauteng</option>
                                 <option>Namibia</option>
@@ -233,19 +233,19 @@
             dateFormat: 'dd-mm-yy'
         });
 
-        $('#book_flight').click(function () {
+        $('#book_flight').click(function() {
             $('#booking-flight').modal('show');
         });
 
-        $('#book_hotel').click(function () {
+        $('#book_hotel').click(function() {
             $('#booking-hotel').modal('show');
         });
 
-        $('#search_flight').click(function () {
+        $('#search_flight').click(function() {
             $.ajax({
                 type: "GET",
                 url: "bookingmanagement/getflightlist",
-                success: function (result) {
+                success: function(result) {
                     console.log(results);
                     if (result.success === true) {
 
@@ -257,16 +257,21 @@
                 dataType: "json"
             });
         });
-        $('#search_accommodation').click(function () {
+        $('#search_accommodation').click(function() {
+            var destination = $("#property_destination").val();
+            alert(destination);
+            
+
             $.ajax({
                 type: "GET",
                 url: "/bookingmanagement/GetPropertyList",
+                data: '{"destination":"'+ destination +'}',
                 dataType: "json",
-                success: function (obj) {
+                success: function(obj) {
                     $('#booking-hotel').modal('hide');
-                    
+
                     $.each(obj.Properties.Result,
-                        function (index, value) {
+                        function(index, value) {
                             $('.col-md-12').append(
                                 `<div class="card">
                                     <div class="card-header card-header-primary">
@@ -275,7 +280,8 @@
                                     </div>
                                   <div class="card-body">
                                     <div class="thumbnail">
-                                        <img src="${value.PhotoUrl}" class="img-rounded img-responsive"></img>                                       
+                                        <img src="${value.PhotoUrl
+                                }" class="img-rounded img-responsive"></img>                                       
                                     </div>                                   
                                         <p>${value.MinimumPrice}</p>                                    
                                  </div>
@@ -284,14 +290,14 @@
 
                         });
                 }
-               
+
             });
         });
 
-        $('#book_car').click(function () {
+        $('#book_car').click(function() {
             $('#booking-car').modal('show');
         });
-        $("input[type=radio]").click(function () {
+        $("input[type=radio]").click(function() {
             $(this).prop('checked', true);
 
             if ($(this)[0].value == "return") {
