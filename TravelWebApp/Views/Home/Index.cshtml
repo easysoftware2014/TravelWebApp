@@ -116,32 +116,44 @@
 </div>
 <!-- end:booking -->
 
+<div class="row">
+    <div class="col-md-12"></div>
+</div>
+
 @section scripts
 {
     <script src="~/Scripts/SignalR.js">
     </script>
     
     <script type="text/javascript">
+
+        function convertDate(date) {
+            var dateCopy = date.split('/');
+            var newDateString = dateCopy[2] + "-" + dateCopy[0] + "-" + dateCopy[1];
+
+            return newDateString;
+        }
+
         $("#booking_search").click(function () {
 
-            var checkOut = $('#check_out_date').val();
-            var checkIn = $('#check_in_date').val();
+            var checkOut = convertDate($('#check_out_date').val());
+            var checkIn = convertDate($('#check_in_date').val());
             var place = $('#search_place').val();
             var priceLimit = $('#price_limit option:selected').text();
 
-            // '{"destination":"'+ place +'}'destination
-            //JSON.stringify({ 'employeeCustomerId': contactId, 'customerIds': customerIds })
             $.ajax({
                 type: "GET",
                 url: "/bookingmanagement/GetPropertyList/",
                 contentType: "application/json; charset=utf-8",
-                data: {destination: place},
+                data: {destination: place, arrivalDate: checkIn, departureDate: checkOut},
                 dataType: "json",
                 success: function(obj) {
                     $('#booking-hotel').modal('hide');
 
                     $.each(obj.Properties.Result,
-                        function(index, value) {
+                        function (index, value) {
+                            console.log(index);
+
                             $('.col-md-12').append(
                                 `<div class="card">
                                     <div class="card-header card-header-primary">
@@ -150,8 +162,7 @@
                                     </div>
                                   <div class="card-body">
                                     <div class="thumbnail">
-                                        <img src="${value.PhotoUrl
-                                }" class="img-rounded img-responsive"></img>                                       
+                                        <img src="${value.PhotoUrl}" class="img-rounded img-responsive"></img>                                       
                                     </div>                                   
                                         <p>${value.MinimumPrice}</p>                                    
                                  </div>

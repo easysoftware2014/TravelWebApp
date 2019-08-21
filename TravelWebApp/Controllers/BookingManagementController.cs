@@ -68,7 +68,7 @@ namespace TravelWebApp.Controllers
 
         }
         [HttpGet]
-        public JsonResult GetPropertyList(string destination)
+        public JsonResult GetPropertyList(string destination, string arrivalDate, string departureDate)
         {
             var propertyEndPoint = ConfigKeys.RapidApiBookingEndPoint();
             var url = propertyEndPoint +
@@ -84,14 +84,13 @@ namespace TravelWebApp.Controllers
                       "offset=0&" +
                       "dest_ids=" + GetDestinationId(destination)+"&" +
                       "guest_qty=1&" +
-                      "arrival_date=2019-08-21&" +
-                      "departure_date=2019-08-27&" +
+                      "arrival_date="+ arrivalDate + "&" +
+                      "departure_date=" + departureDate + "&" +
                       "room_qty=1";
-            
+          
             var rapidApiKey = ConfigKeys.GetRapidApiKey();
             var rapidApiHost = ConfigKeys.GetRapidApiHost();
             
-
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", rapidApiKey);
@@ -118,7 +117,7 @@ namespace TravelWebApp.Controllers
             var apiHost = ConfigKeys.GetRapidApiHost();
             var languageCode = "en-us";
             var place = destination;
-            var endPoint = string.Format("https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete?languagecode={0}&text={1}", languageCode, place);
+            var endPoint = $"https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete?languagecode={languageCode}&text={place}";
 
             using (var client = new HttpClient())
             {
@@ -128,7 +127,7 @@ namespace TravelWebApp.Controllers
                 var json = client.GetStringAsync(endPoint);
                 var destinationModel = JsonConvert.DeserializeObject<List<DestinationModel>>(json.Result);
 
-                return destinationModel.First().DestinationId;
+                return destinationModel?.First().DestinationId;
 
             }
 
