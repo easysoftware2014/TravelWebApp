@@ -98,10 +98,12 @@ namespace TravelWebApp.Controllers
 
                 var json = client.GetStringAsync(url);
                 var propertyList = JsonConvert.DeserializeObject<PropertyListModel>(json.Result);
+                var properties = propertyList.Result != null
+                    ? propertyList.Result.Where(x => x.MinimumPrice != "0") : propertyList.Result;
 
                 return Json(new
                 {
-                    Properties = propertyList
+                    Properties = properties
                 }, JsonRequestBehavior.AllowGet);
             }
         }

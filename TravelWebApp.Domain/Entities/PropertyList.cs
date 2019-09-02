@@ -26,8 +26,9 @@ namespace TravelWebApp.Domain.Entities
         public Double ReviewScore { get; set; }
         [JsonProperty(PropertyName = "cleanliness_score_word")]
         public string CleanlinessScore { get; set; }
-        
-
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
+ 
     }
 
     public class PriceBreakdown

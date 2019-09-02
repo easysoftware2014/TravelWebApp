@@ -3,6 +3,36 @@
     Layout = "~/Views/shared/_TravelLayout.cshtml";
 }
 
+<style>
+    .property {
+        display: inline-block;
+        margin: 10px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 2px #ccc;
+        width: 200px;
+        padding: 20px;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#"><span>Traveland</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/home/accommodation" class="nav-link">Accommodation</a></li>
+                <li class="nav-item"><a href="/home/flight" class="nav-link">Flight</a></li>
+                <li class="nav-item"><a href="/home/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item cta"><a href="#" class="nav-link">Book Now</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
 
 @*<div class="call-to-action">
     <div class="container">
@@ -115,10 +145,28 @@
     </div>
 </div>
 <!-- end:booking -->
+<table id="result_table" class="table table-hover display" style="display: none" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Review</th>
+            <th>Currency</th>
+            <th>Price</th>
+            <th>Rooms</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+<div class="row">
+    <div class="col-md-12">
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-md-12"></div>
+    <div id="booking_results">
+    </div>
 </div>
+
 
 @section scripts
 {
@@ -126,6 +174,12 @@
     </script>
     
     <script type="text/javascript">
+
+        $('.nav-item a').click(function() {
+            $('.active').removeClass('nav-item active');
+            console.log($(this));
+            $(this).addClass("nav-item active");
+        });
 
         function convertDate(date) {
             var dateCopy = date.split('/');
@@ -135,6 +189,12 @@
         }
 
         $("#booking_search").click(function () {
+
+            var $this = $(this);
+            $this.button('loading');
+            setTimeout(function() {
+                $this.button('reset');
+            }, 8000);
 
             var checkOut = convertDate($('#check_out_date').val());
             var checkIn = convertDate($('#check_in_date').val());
@@ -149,32 +209,40 @@
                 dataType: "json",
                 success: function(obj) {
                     $('#booking-hotel').modal('hide');
+                    $('#result_table').attr('display:', "block;");
+                    //console.log(obj.Properties);
+                    var results = obj.Properties;
+                    //console.log(results);
+                    $("#result_table").DataTable({
+                        "data": results,
+                        "columns": [
+                            {"data" : "HotelName"},
+                            {"data" : "Review"},
+                            {"data" : "CurrencyCode" },
+                            {"data" : "MinimumPrice"},
+                            {"data" : "AvailableRooms"},
+                            {"data" : "Url"}
+                            ]
+                    });
+                    //$.each(obj.Properties.Result,
+                    //    function (index, value) {
+                    //        console.log(index);
 
-                    $.each(obj.Properties.Result,
-                        function (index, value) {
-                            console.log(index);
-
-                            $('.col-md-12').append(
-                                `<div class="card">
-                                    <div class="card-header card-header-primary">
-                                        <h4 class="card-title ">${value.HotelName}</h4>
-                                        <p class="card-category"> ${value.Review}</p>
-                                    </div>
-                                  <div class="card-body">
-                                    <div class="thumbnail">
-                                        <img src="${value.PhotoUrl}" class="img-rounded img-responsive"></img>                                       
-                                    </div>                                   
-                                        <p>${value.MinimumPrice}</p>                                    
-                                 </div>
-                            </div>`
-                            );
-
-                        });
+                    //        $('#booking_results').append(
+                    //            `<div class="property">
+                    //                 ${value.HotelName}
+                    //                 ${value.Review}
+                    //                 <div class="img">
+                    //                    <img src="${value.PhotoUrl}" class="img-fluid"></img>                                       
+                    //                </div>   
+                    //                <p>${value.MinimumPrice}</p>                                     
+                    //            </div>`
+                    //        );
+                    //    });
                 }
 
             });
             
-            alert('CheckIn: '+checkIn + ' CheckOut: '+ checkOut + ' Limit: ' + priceLimit + ' Place: ' + place);
         });
         $("#search_plac").focus();
     </script>

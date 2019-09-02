@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Accommodation";
+    Layout = "~/Views/Shared/_TravelLayout.cshtml";
+}
+
+<style>
+    .property {
+        display: inline-block;
+        margin: 10px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 2px #ccc;
+        width: 500px;
+        padding: 20px;
+    }
+</style>
+
+<section class="ftco-section ftco-no-pb ftco-no-pt">
+    <div class="row" style="background-color:#fff">
+        <div class="col-md-12">
+            <h1 style="text-align: center; color: #cccccc">@ViewBag.Title</h1>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3" style="border: #cccccc; border-style: groove; border-color: darkgreen">
+            <div class="form-group">
+                <label for="accom_destination">Destination</label>
+                <input type="text" id="accom_destination" placeholder="...where to ?" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="accom_arrival">Arrival Date</label>
+                <br />
+                <input id="accom_arrival" type="text" placeholder="Arrival date" class="form-group datepicker"/>
+            </div>
+            <div class="form-group">
+                <label for="accom_departure">Departure Date</label>
+                <br />
+                <input id="accom_departure" class="form-group datepicker" placeholder="Departure date" type="text"/>
+            </div>
+            <div class="form-group">
+                <input type="button" id="btn_accom_submit" value="Submit" class="btn btn-block btn-success"/>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div id="booking_results">
+            </div>
+        </div>
+        <div class="col-md-2" style="border: #cccccc; border-style: groove;border-color: darkgreen">
+            
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("#btn_accom_submit").click(function() {
+            alert("");
+        });
+    </script>
+}

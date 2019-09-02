@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Flight";
+    Layout = "~/Views/Shared/_TravelLayout.cshtml";
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#"><span>Traveland</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/home/accommodation" class="nav-link">Accommodation</a></li>
+                <li class="nav-item active"><a href="/home/flight" class="nav-link">Flight</a></li>
+                <li class="nav-item"><a href="/home/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item cta"><a href="#" class="nav-link">Book Now</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="ftco-section ftco-no-pb ftco-no-pt" style="display: none">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-wrap-1 ftco-animate p-4" id="flight">
+                    <form action="#" class="search-property-1">
+                        <div class="row">
+                            <div class="col-lg align-items-end">
+                                <div class="form-group">
+                                    <label for="search_place">Destination</label>
+                                    <div class="form-field">
+                                        <div class="icon"><span class="ion-ios-search"></span></div>
+                                        <input type="text" id="search_flight" focus="true" class="form-control" placeholder="Search place">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg align-items-end">
+                                <div class="form-group">
+                                    <label for="check_in_date">Check-in date</label>
+                                    <div class="form-field">
+                                        <div class="icon"><span class="ion-ios-calendar"></span></div>
+                                        <input type="text" id="flight_in_date" class="form-control datepicker" placeholder="Check In Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg align-items-end">
+                                <div class="form-group">
+                                    <label for="check_out_date">Check-out date</label>
+                                    <div class="form-field">
+                                        <div class="icon"><span class="ion-ios-calendar"></span></div>
+                                        <input type="text" id="flight_out_date" class="form-control datepicker" placeholder="Check Out Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg align-items-end">
+                                <div class="form-group">
+                                    <label for="#">Price Limit</label>
+                                    <div class="form-field">
+                                        <div class="select-wrap">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select name="pricelimit" id="flight_price_limit" class="form-control">
+                                                <option value="">R5,000</option>
+                                                <option value="">R10,000</option>
+                                                <option value="">R50,000</option>
+                                                <option value="">R100,000</option>
+                                                <option value="">R200,000</option>
+                                                <option value="">R300,000</option>
+                                                <option value="">R400,000</option>
+                                                <option value="">R500,000</option>
+                                                <option value="">R600,000</option>
+                                                <option value="">R700,000</option>
+                                                <option value="">R800,000</option>
+                                                <option value="">R900,000</option>
+                                                <option value="">R1,000,000</option>
+                                                <option value="">R2,000,000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg align-self-end">
+                                <div class="form-group">
+                                    <div class="form-field">
+                                        <button type="button" id="flight_search" class="form-control btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

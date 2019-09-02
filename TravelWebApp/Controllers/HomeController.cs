@@ -28,6 +28,18 @@ namespace TravelWebApp.Controllers
 
             return View();
         }
+        public ActionResult Flight()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+        public ActionResult Accommodation()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
         public ActionResult Login()
         {
             return RedirectToAction("Login","User");
