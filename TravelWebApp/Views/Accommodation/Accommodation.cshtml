@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "Accommodation";
+    Layout = "~/Views/Shared/_TravelLayout.cshtml";
+}
+
+
+<style>
+    .property {
+        display: inline-block;
+        margin: 10px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 2px #ccc;
+        width: 800px;
+        padding: 20px;
+    }
+    .text-color {
+        color: #373737
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 style="color: lightgreen"><i class="fa fa-home"></i> @ViewBag.Title</h3>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            
+            <input type="text" id="search_place" placeholder="Destination" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+
+            <input id="check_in_date" type="text" placeholder="Arrival date" class="form-control datepicker" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <input id="check_out_date" class="form-control datepicker" placeholder="Departure date" type="text" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group"style="margin-top: -35px">
+            <button id="btn_accom_submit" type="button" style="height: 50px; width: 100%" class="btn btn-success"><i class="fa-hotel"></i> Search</button>
+        </div>
+    </div>
+
+</div>
+@*<div class="row">
+    <div class="col-md-12">
+        <div id="booking_results">
+            <br />
+        </div>
+    </div>
+</div>*@
+@*<aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" role="complementary">
+        <div class="htlfndr-modify-search-aside widget">
+            <h3 style="background-color: transparent"> @ViewBag.Title</h3>
+            <div class="htlfndr-widget-content">
+                <form name="search-hotel" id="search-hotel">
+                    <label for="htlfndr-city" class="htlfndr-input-label">Your destination</label>
+                    <div id="htlfndr-input-1" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-city" id="search_place" class="form-control" placeholder="Enter city, region"> </div>
+                    <div class="htlfndr-float-input first-float"> <label for="htlfndr-date-in" class="htlfndr-input-label">Check in</label> <div id="htlfndr-input-date-in" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-in" id="check_in_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                    <div class="htlfndr-float-input"> <label for="htlfndr-date-out" class="htlfndr-input-label">Check out</label> <div id="htlfndr-input-date-out" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-out" id="check_out_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                    <section class="htlfndr-select-block">
+                        <div class="htlfndr-input-wrapper htlfndr-small-select">
+                            <label for="htlfndr-room-button" class="htlfndr-input-label">Room</label>
+                            <select name="htlfndr-room" id="htlfndr-room" class="form-control dropdown" style="display: block;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <div class="htlfndr-input-wrapper htlfndr-small-select">
+                            <label for="htlfndr-adult-button" class="htlfndr-input-label">Adult</label>
+                            <select name="htlfndr-adult" id="htlfndr-adult" class="form-control dropdown" style="display: block;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <div class="htlfndr-input-wrapper htlfndr-small-select">
+                            <label for="htlfndr-kids-button" class="htlfndr-input-label">Kids</label>
+                            <select name="htlfndr-kids" id="htlfndr-kids" class="form-control dropdown" style="display: block;">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                    </section>
+                    <div class="form-group">
+                        <button id="btn_accom_submit" type="button" style="height: 45px; width: 100%" class="btn btn-outline-success"><i class="fa-hotel"></i> Search</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </aside>*@
+
+
+@*<div class="row">
+        <div class="col-md-12">
+            <div id="booking_results">
+                <br />
+                <table id="result_table" class="table table-hover display" style="display: none" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Review</th>
+                            <th>Currency</th>
+                            <th>Price</th>
+                            <th>Rooms</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>*@
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        function convertDate(date) {
+            var dateCopy = date.split('/');
+            var newDateString = dateCopy[2] + "-" + dateCopy[0] + "-" + dateCopy[1];
+
+            return newDateString;
+        }
+
+        $("#btn_accom_submit").click(function () {
+            $('#booking_results').empty();
+            $('#booking').modal('show');
+            //$('#spinner').attr('style', 'display:block;');
+
+            var $this = $(this);
+            $this.button('loading');
+            setTimeout(function () {
+                $this.button('reset');
+            },
+                8000);
+            var checkOut = convertDate($('#check_out_date').val());
+            var checkIn = convertDate($('#check_in_date').val());
+            var place = $('#search_place').val();
+            var priceLimit = $('#price_limit option:selected').text();
+
+            $.ajax({
+                type: "GET",
+                url: "/bookingmanagement/GetPropertyList/",
+                contentType: "application/json; charset=utf-8",
+                data: { destination: place, arrivalDate: checkIn, departureDate: checkOut },
+                dataType: "json",
+                success: function (obj) {
+                    $('#booking-hotel').modal('hide');
+                    $('#booking').modal('hide');
+                    $('#spinner').attr('style', 'display:none;');
+                    //$('#result_table').attr('style', "display:block;");
+                    var results = obj.Properties;
+                    var count = obj.Count;
+                    $('#results_title').attr('style', 'display:block;');
+                    //$("#result_table").DataTable({
+                    //    "data": results,
+                    //    "columns": [
+                    //        { "data": "HotelName" },
+                    //        { "data": "Review" },
+                    //        { "data": "CurrencyCode" },
+                    //        { "data": "MinimumPrice" },
+                    //        { "data": "AvailableRooms" },
+                    //        { "data": "Url" }
+                    //    ]
+                    //});
+                    if (count > 0) {
+                        $('#aside').attr('style', 'display:block;');
+                        $.each(obj.Properties,
+                            function (index, value) {
+                                $('#booking_results').append(
+                                    `<div class="property">
+                                                     <div class="text-center">
+                                                         <h3>${value.HotelName}</h3>
+                                                     </div
+                                                     <br/>
+                                                     <div style="text-align: center">
+                                                     Review: ${value.Review}
+                                                     <div class="img">
+                                                         <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl}" style="" class="htlfndr-hotel-gallery img"></img></a>
+                                                     </div>
+                                                     </br>
+                                                         <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
+                                                 </div>`
+                                );
+                            });
+                    }
+
+                },
+                error: (function () {
+                    $('#booking-hotel').modal('hide');
+                    $('#booking').modal('hide');
+                    alert();
+
+                })
+
+            });
+
+        });
+    </script>
+}
+@*<div style="text-align: center">
+        Review: ${value.Review}
+        <div class="img">
+            <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl}" style="" class="htlfndr-hotel-gallery img"></img></a>
+        </div>
+        </br>
+        <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
+    </div>*@

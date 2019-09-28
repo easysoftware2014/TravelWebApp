@@ -4,9 +4,9 @@
     <title>Fourier</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="../../Content/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="../../Content/animate.css">
 
@@ -25,202 +25,121 @@
     <link rel="stylesheet" href="../../Content/flaticon.css">
     <link rel="stylesheet" href="../../Content/icomoon.css">
     <link rel="stylesheet" href="../../Content/style.css">
+    <link rel="stylesheet" href="../../Content/search-results.css" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="/"><span>Fourier</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
+    <div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="booking" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 50px; margin-left: 200px; margin-top: 150px"></i>
 
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="/home/accommodation" class="nav-link">Accommodation</a></li>
-                    <li class="nav-item"><a href="/home/flight" class="nav-link">Flight</a></li>
-                    <li class="nav-item"><a href="/home/about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
-                    <li class="nav-item cta"><a href="#" class="nav-link">Book Now</a></li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- END nav -->
-
-    <div class="hero-wrap js-fullheight" style="background-image: url(/images/bg_1.jpg);" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
-                <div class="col-md-7 ftco-animate mt-5" data-scrollax=" properties: { translateY: '70%' }">
-                    <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Be a Traveler not a Tourist</h1>
-                    <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Travel to the any corner of the world, without going around in circles</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @*<section class="ftco-section ftco-no-pb ftco-no-pt" style="display: none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="search-wrap-1 ftco-animate p-4" id="flight">
-                        <form action="#" class="search-property-1">
-                            <div class="row">
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="search_place">Destination</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-search"></span></div>
-                                            <input type="text" id="search_flight" focus="true" class="form-control" placeholder="Search place">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="check_in_date">Check-in date</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-calendar"></span></div>
-                                            <input type="text" id="flight_in_date" class="form-control datepicker" placeholder="Check In Date">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="check_out_date">Check-out date</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-calendar"></span></div>
-                                            <input type="text" id="flight_out_date" class="form-control datepicker" placeholder="Check Out Date">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Price Limit</label>
-                                        <div class="form-field">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="pricelimit" id="flight_price_limit" class="form-control">
-                                                    <option value="">R5,000</option>
-                                                    <option value="">R10,000</option>
-                                                    <option value="">R50,000</option>
-                                                    <option value="">R100,000</option>
-                                                    <option value="">R200,000</option>
-                                                    <option value="">R300,000</option>
-                                                    <option value="">R400,000</option>
-                                                    <option value="">R500,000</option>
-                                                    <option value="">R600,000</option>
-                                                    <option value="">R700,000</option>
-                                                    <option value="">R800,000</option>
-                                                    <option value="">R900,000</option>
-                                                    <option value="">R1,000,000</option>
-                                                    <option value="">R2,000,000</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-self-end">
-                                    <div class="form-group">
-                                        <div class="form-field">
-                                            <button type="button" id="flight_search" class="form-control btn btn-primary">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>*@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-rose ftco-navbar-light" id="ftco-navbar" >
+    <div class="container">
+        <a class="navbar-brand" href="/"><span>Fourier</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
 
-    @*<section class="ftco-section ftco-no-pb ftco-no-pt">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="search-wrap-1 ftco-animate p-4" id="accommodation">
-                        <form action="#" class="search-property-1">
-                            <div class="row">
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="search_place">Destination</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-search"></span></div>
-                                            <input type="text" id="search_place" focus="true" class="form-control" placeholder="Search place">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="check_in_date">Check-in date</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-calendar"></span></div>
-                                            <input type="text" id="check_in_date" class="form-control datepicker" placeholder="Check In Date">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="check_out_date">Check-out date</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="ion-ios-calendar"></span></div>
-                                            <input type="text" id="check_out_date" class="form-control datepicker" placeholder="Check Out Date">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Price Limit</label>
-                                        <div class="form-field">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="pricelimit" id="price_limit" class="form-control">
-                                                    <option value="">R5,000</option>
-                                                    <option value="">R10,000</option>
-                                                    <option value="">R50,000</option>
-                                                    <option value="">R100,000</option>
-                                                    <option value="">R200,000</option>
-                                                    <option value="">R300,000</option>
-                                                    <option value="">R400,000</option>
-                                                    <option value="">R500,000</option>
-                                                    <option value="">R600,000</option>
-                                                    <option value="">R700,000</option>
-                                                    <option value="">R800,000</option>
-                                                    <option value="">R900,000</option>
-                                                    <option value="">R1,000,000</option>
-                                                    <option value="">R2,000,000</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg align-self-end">
-                                    <div class="form-group">
-                                        <div class="form-field">
-                                            <button type="button" id="booking_search" class="form-control btn btn-primary">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/accommodation" class="nav-link">Accommodation</a></li>
+                <li class="nav-item"><a href="/flight" class="nav-link">Flight</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br />
+    <!-- END nav -->
+    <section class="ftco-section" style="background-image: url('../../Images/destination-4.jpg');">
+        <div class="container-fluid">
+            <div class="row" style="padding-left: 170px">
+                <div class="project">
+                    @RenderBody()
                 </div>
             </div>
         </div>
-    </section>*@
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" id="aside" style="display: none" role="complementary">
+                <div class="htlfndr-modify-search-aside widget">
+                    <h3 style="background-color: transparent"> Search</h3>
+                    <div class="htlfndr-widget-content">
+                        <form name="search-hotel" id="search-hotel">
+                            <label for="htlfndr-city" class="htlfndr-input-label">Your destination</label>
+                            <div id="htlfndr-input-1" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-city" id="search_place" class="form-control" placeholder="Enter city, region"> </div>
+                            <div class="htlfndr-float-input first-float"> <label for="htlfndr-date-in" class="htlfndr-input-label">Check in</label> <div id="htlfndr-input-date-in" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-in" id="check_in_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                            <div class="htlfndr-float-input"> <label for="htlfndr-date-out" class="htlfndr-input-label">Check out</label> <div id="htlfndr-input-date-out" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-out" id="check_out_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                            <section class="htlfndr-select-block">
+                                <div class="htlfndr-input-wrapper htlfndr-small-select">
+                                    <label for="htlfndr-room-button" class="htlfndr-input-label">Room</label>
+                                    <select name="htlfndr-room" id="htlfndr-room" class="form-control dropdown" style="display: block;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="htlfndr-input-wrapper htlfndr-small-select">
+                                    <label for="htlfndr-adult-button" class="htlfndr-input-label">Adult</label>
+                                    <select name="htlfndr-adult" id="htlfndr-adult" class="form-control dropdown" style="display: block;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="htlfndr-input-wrapper htlfndr-small-select">
+                                    <label for="htlfndr-kids-button" class="htlfndr-input-label">Kids</label>
+                                    <select name="htlfndr-kids" id="htlfndr-kids" class="form-control dropdown" style="display: block;">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </section>
+                            <div class="form-group">
+                                <button id="btn_accom_submit" type="button" style="height: 45px; width: 100%" class="btn btn-outline-success"><i class="fa-hotel"></i> Search</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </aside>
+            <div class="col-sm-8">
+                <div id="booking_results">
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
     <section class="ftco-section">
         <div class="container">
             <div class="row">
                 <div class="project">
-                    @RenderBody()
+
                 </div>
             </div>
 
         </div>
     </section>
-   
+
     <section class="ftco-subscribe" style="background-image: url('/images/bg_1.jpg');">
         <div class="overlay">
             <div class="container">
@@ -337,6 +256,7 @@
     <script type="text/javascript">
         $("#search_place").geocomplete();
         $("#accom_destination").geocomplete();
+        $("#origin_place").geocomplete();
         $('.datepicker').datepicker({
             dateFormat: 'YYYY-MM-dd'
         });

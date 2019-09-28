@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "Flight";
+    Layout = "~/Views/Shared/_TravelLayout.cshtml";
+}
+<style>
+    .property {
+        display: inline-block;
+        margin: 10px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 2px #ccc;
+        width: 500px;
+        padding: 20px;
+        background-color: azure
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 style="color: lightgreen;"> <i class=" fas fa-plane"></i> @ViewBag.Title</h3>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-12">
+        <label> Trip Type</label>
+        <br/>
+        <div class="radio">
+            <label><input type="radio" class="trip_type" value="0" name="tripradio" checked> One way</label>
+            <label><input type="radio" class="trip_type" value="1" name="tripradio"> Return</label>
+        </div>
+        @*<select id="tripType" class="form-control selected dropdown-backdrop">
+            <option value="0" selected="selected">One way</option>
+            <option value="1">Return</option>
+        </select>*@
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input type="text" id="origin_place" placeholder="from" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input type="text" id="search_place" placeholder="to" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <input id="departure_date" class="form-control datepicker" placeholder="Departure" type="text" />
+        </div>
+    </div>
+    <div class="col-md-2" style="display: none" id="returnTrip">
+        <div class="form-group">
+            <input id="return_date" type="text" placeholder="Arrival" class="form-control datepicker" />
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <select id="classType" class="form-control selected dropdown-backdrop">
+                <option value="0" selected="selected">Economy</option>
+                <option value="1">Business</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <button style="height: 50px; margin-top: -1px;width: 175px" id="btn_flight_submit" class="btn btn-success"><i class='fas fa-plane'></i> Search</button>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    @*<div class="col-sm-6">
+        <select id="tripType" class="form-control selected dropdown-backdrop">
+            <option value="0" selected="selected">One way</option>
+            <option value="1">Return</option>
+        </select>
+    </div>*@
+    <div class="col-sm-6">
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="booking_results">
+            <br />
+
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function convertDate(date) {
+            var dateCopy = date.split('/');
+            console.log(dateCopy);
+            var newDateString = dateCopy[2] + "-" + dateCopy[0]; //+ "-" + dateCopy[1]
+
+            return newDateString;
+        }
+
+        var tripType = "0";
+
+        $(".trip_type").on('change',
+            function () {
+                var tripType = $('input[name=tripradio]:checked').val();
+                
+                if (tripType === '1') {
+                    $("#returnTrip").attr('style', "display: block;");
+                }
+                else
+                    $("#returnTrip").attr('style', "display: none;");
+            });
+
+        $("#btn_flight_submit").click(function () {
+            $('#booking_results').empty();
+            $('#booking').modal('show');
+
+            var departure = convertDate($('#departure_date').val());
+            var returnDate = convertDate($('#return_date').val());
+            var destination = $('#search_place').val();
+            var originPlace = $('#origin_place').val();
+            var classType = tripType;
+
+
+            $.ajax({
+                type: "GET",
+                url: "/bookingmanagement/GetCheapestFlightTicket/",
+                contentType: "application/json; charset=utf-8",
+                data: { from: originPlace, to: destination, departure: departure, returnDate: returnDate },
+                dataType: "json",
+                success: function (obj) {
+                    $('#booking-hotel').modal('hide');
+                    $('#booking').modal('hide');
+                    //$('#result_table').attr('style', "display:block;");
+                    var results = obj.Flight;
+                    //console.log(results);
+                    var arr = ($.parseJSON(results));
+
+                    $.each(arr,
+                        function (key, value) {
+                            if (key === "data") {
+                                $.each(value,
+                                    function (name, dValue) {
+                                        $.each(dValue, function (x, v) {
+                                            $.each(v, function (index, data) {
+                                                console.log(data);
+                                                $('#booking_results').append(
+                                                    `<div class="property">
+                                                                     ${data}
+                                                                    <br/>
+                                                                     Review: ${value.Review}
+                                                                     <div class="img">
+                                                                      <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl
+                                                    }" style="" class="img-fluid"></img></a>
+                                                                    </div>
+                                                                    <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
+                                                                </div>`
+                                                );
+                                                //alert(index + " " + data);
+                                            });
+                                        });
+                                    });
+                            }
+                        });
+
+                    var count = obj.Count;
+                    $('#results_title').attr('style', 'display:block;');
+                    //$("#result_table").DataTable({
+                    //    "data": results,
+                    //    "columns": [
+                    //        { "data": "HotelName" },
+                    //        { "data": "Review" },
+                    //        { "data": "CurrencyCode" },
+                    //        { "data": "MinimumPrice" },
+                    //        { "data": "AvailableRooms" },
+                    //        { "data": "Url" }
+                    //    ]
+                    //});
+                }
+
+            });
+
+        });
+    </script>
+}
+
+

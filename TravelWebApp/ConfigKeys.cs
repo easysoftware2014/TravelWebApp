@@ -8,7 +8,7 @@ namespace TravelWebApp
         {
             return ConfigurationManager.AppSettings["RapidApiKey"];
         }
-        public static string GetRapidApiHost()
+        public static string GetRapidPropertyApiHost()
         {
             return ConfigurationManager.AppSettings["RapidApiPropertyBookingHost"]; 
         }
@@ -26,6 +26,18 @@ namespace TravelWebApp
         public static string RapidApiBookingEndPoint()
         {
             return ConfigurationManager.AppSettings["RapidApiPropertyBookingEndpoint"];
+        }
+        public static string RapidApiFlightEndPoint()
+        {
+            return ConfigurationManager.AppSettings["RapidApiFlightBookingEndpoint"];
+        }
+        public static string RapidApiFlightHost()
+        {
+            return ConfigurationManager.AppSettings["RapidApiFlightBookingHost"];
+        }
+        public static string GetCheapestFlightTicket()
+        {
+            return ConfigurationManager.AppSettings["CheapestFlightTicket"];
         }
     }
 }

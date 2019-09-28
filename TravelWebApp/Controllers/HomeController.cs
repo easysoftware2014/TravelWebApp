@@ -1,18 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
+using TravelWebApp.Models;
 
 namespace TravelWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string _path = ConfigurationManager.AppSettings["Cities"];
+        [OutputCache(Duration = 6000, VaryByParam = "none", Location = System.Web.UI.OutputCacheLocation.Client)]
         public ActionResult Index()
         {
+            var path = _path;
+            var model = new CityModel();
 
-            return View();
+            string jsonFromFile;
+            using (var reader = new StreamReader(path))
+            {
+                jsonFromFile = reader.ReadToEnd();
+            }
+
+            var file = jsonFromFile;
+            var serialized = JsonConvert.DeserializeObject<List<CitiesModel>>(file);
+            ViewBag.Cities = serialized;
+            
+            return View(model);
         }
 
         public ActionResult About()
@@ -48,5 +67,6 @@ namespace TravelWebApp.Controllers
         {
             return RedirectToAction("Register","User");
         }
+        
     }
 }

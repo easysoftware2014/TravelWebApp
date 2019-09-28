@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Security;
 using Newtonsoft.Json;
@@ -18,6 +20,7 @@ namespace TravelWebApp.Controllers
     public class BookingManagementController : Controller
     {
         private readonly IUserService _userService;
+        private readonly string _path = ConfigurationManager.AppSettings["Cities"];
 
         public BookingManagementController()
         {
@@ -35,7 +38,7 @@ namespace TravelWebApp.Controllers
                 user = (User)Session["User"] ?? _userService.Get(id);
                 Session["User"] = user;
             }
-            
+
             var model = new UserModel();
 
             if (user != null)
@@ -82,15 +85,15 @@ namespace TravelWebApp.Controllers
                       "children_age=5%2C7&" +
                       "search_type=city&" +
                       "offset=0&" +
-                      "dest_ids=" + GetDestinationId(destination)+"&" +
+                      "dest_ids=" + GetDestinationId(destination) + "&" +
                       "guest_qty=1&" +
-                      "arrival_date="+ arrivalDate + "&" +
+                      "arrival_date=" + arrivalDate + "&" +
                       "departure_date=" + departureDate + "&" +
                       "room_qty=1";
-          
+
             var rapidApiKey = ConfigKeys.GetRapidApiKey();
-            var rapidApiHost = ConfigKeys.GetRapidApiHost();
-            
+            var rapidApiHost = ConfigKeys.GetRapidPropertyApiHost();
+
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", rapidApiKey);
@@ -101,22 +104,122 @@ namespace TravelWebApp.Controllers
                 var properties = propertyList.Result != null
                     ? propertyList.Result.Where(x => x.MinimumPrice != "0") : propertyList.Result;
 
+                var count = properties?.Count();
+                //TempData["properties"] = propertyList.Result;
+                //return RedirectToAction("PropertyResults", propertyList.Result);
+
                 return Json(new
                 {
-                    Properties = properties
+                    Properties = properties,
+                    Count = count
                 }, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public JsonResult GetFlightList()
+        public JsonResult GetFlightList(string origin, string destination, string departure, string returnDate, string classType)
         {
-            return Json(new { }, JsonRequestBehavior.AllowGet);
+            var rapidApiKey = ConfigKeys.GetRapidApiKey();
+            var rapidApiHost = ConfigKeys.RapidApiFlightHost();
+            var endPoint = ConfigKeys.RapidApiFlightEndPoint();
+            var token = ConfigurationManager.AppSettings["FlightToken"];
+
+            var url = endPoint +
+                      "currency=zar&" +
+                      "period_type=year&" +
+                      "page=1&limit=30&" +
+                      "show_to_affiliates=true&" +
+                      "sorting=price&" +
+                      "trip_class=0&" +
+                      "token=" + token;
+
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", rapidApiKey);
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", rapidApiHost);
+
+                var json = client.GetStringAsync(url);
+                var flightsModel = JsonConvert.DeserializeObject<FlightModel>(json.Result);
+                var flights = flightsModel.data ?? flightsModel.data;
+
+                return Json(new
+                {
+                    Flight = flights
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
+        private string GetIataCode(string name)
+        {
+            var path = _path;
+
+            string jsonFromFile;
+            using (var reader = new StreamReader(path))
+            {
+                jsonFromFile = reader.ReadToEnd();
+            }
+
+            var sName = name.Split(',')[0];
+            var file = jsonFromFile;
+            var serialized = JsonConvert.DeserializeObject<List<CitiesModel>>(file);
+            var code = string.Empty;
+
+            foreach (var cityModel in serialized)
+            {
+                if (cityModel.name.ToLower().Contains(sName.ToLower()))
+                    code = cityModel.code;
+            }
+
+            return code;
+        }
+        public JsonResult GetCheapestFlightTicket(string from, string to, string departure, string returnDate)
+        {
+            var rapidApiKey = ConfigKeys.GetRapidApiKey();
+            var rapidApiHost = ConfigKeys.RapidApiFlightHost();
+            var endPoint = ConfigKeys.GetCheapestFlightTicket();
+            var origin = GetIataCode(from);
+            var destination = GetIataCode(to);
+            var token = ConfigurationManager.AppSettings["FlightToken"];
+            var returnD = returnDate.ToLower().Contains("undefined");
+
+            if ((!string.IsNullOrEmpty(origin)) && (!string.IsNullOrEmpty(destination)))
+            {
+                var date = string.Empty;
+                if (!returnD)
+                    date = returnDate;
+
+                endPoint = endPoint +
+                           "origin=" + origin + "&" +
+                           "destination=" + destination + "&" +
+                           "depart_date=" + departure + "&" +
+                           "return_date=" + date + "&" +
+                           "token=" + token;
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Key", rapidApiKey);
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("X-RapidAPI-Host", rapidApiHost);
+
+                    var json = client.GetStringAsync(endPoint);
+                    var cheapestFlightsModel = (json.Result);
+                    //var flights = cheapestFlightsModel ?? cheapestFlightsModel;
+
+                    return Json(new
+                    {
+                        Flight = cheapestFlightsModel
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new
+            {
+                Flight = (CheapestFlight[])null
+            }, JsonRequestBehavior.AllowGet);
+        }
         private string GetDestinationId(string destination)
         {
             var apiKey = ConfigKeys.GetRapidApiKey();
-            var apiHost = ConfigKeys.GetRapidApiHost();
+            var apiHost = ConfigKeys.GetRapidPropertyApiHost();
             var languageCode = "en-us";
             var place = destination;
             var endPoint = $"https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete?languagecode={languageCode}&text={place}";
@@ -134,6 +237,17 @@ namespace TravelWebApp.Controllers
             }
 
             return string.Empty;
+        }
+        public ActionResult PropertyResults(PropertyList[] list)
+        {
+            var model = (PropertyList[]) TempData["properties"];
+
+            return View(model);
+        }
+
+        public ActionResult FlightResults(string results)
+        {
+            return View();
         }
     }
 }

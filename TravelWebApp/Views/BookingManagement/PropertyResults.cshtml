@@ -1,0 +1,27 @@
+﻿@model TravelWebApp.Domain.Entities.PropertyList[]
+
+@{
+    Layout = "~/Views/Shared/_TravelLayout.cshtml";
+    var test = Model;
+}
+
+
+<div class="container">
+    <div class="row">
+        <aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" role="complementary">
+            <div class="htlfndr-modify-search-aside widget">
+                <h3 class="widget-title"> Modify Search</h3>
+                <div class="htlfndr-widget-content">
+                    <form name="search-hotel" id="search-hotel">
+                        <label for="htlfndr-city" class="htlfndr-input-label">Your destination</label>
+                        <div id="htlfndr-input-1" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-city" id="htlfndr-city" value="@Model[0].HotelName" class="search-hotel-input" placeholder="Enter city, region"> </div>
+                        <div class="htlfndr-float-input first-float"> <label for="htlfndr-date-in" class="htlfndr-input-label">Check in</label> <div id="htlfndr-input-date-in" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-in" id="htlfndr-date-in" class="search-hotel-input hasDatepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                        <div class="htlfndr-float-input"> <label for="htlfndr-date-out" class="htlfndr-input-label">Check out</label> <div id="htlfndr-input-date-out" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-out" id="htlfndr-date-out" class="search-hotel-input hasDatepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
+                        <section class="htlfndr-select-block"> <div class="htlfndr-input-wrapper htlfndr-small-select"> <label for="htlfndr-room-button" class="htlfndr-input-label">Room</label> <select name="htlfndr-room" id="htlfndr-room" class="htlfndr-dropdown" style="display: none;"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> </select><span class="ui-selectmenu-button ui-widget ui-state-default ui-corner-all" tabindex="0" id="htlfndr-room-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="htlfndr-room-menu" aria-haspopup="true" style="width: 74px;"><span class="ui-icon ui-icon-triangle-1-s"></span><span class="ui-selectmenu-text">1</span></span> </div> <div class="htlfndr-input-wrapper htlfndr-small-select"> <label for="htlfndr-adult-button" class="htlfndr-input-label">Adult</label> <select name="htlfndr-adult" id="htlfndr-adult" class="htlfndr-dropdown" style="display: none;"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> </select><span class="ui-selectmenu-button ui-widget ui-state-default ui-corner-all" tabindex="0" id="htlfndr-adult-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="htlfndr-adult-menu" aria-haspopup="true" style="width: 74px;"><span class="ui-icon ui-icon-triangle-1-s"></span><span class="ui-selectmenu-text">1</span></span> </div> <div class="htlfndr-input-wrapper htlfndr-small-select"> <label for="htlfndr-kids-button" class="htlfndr-input-label">Kids</label> <select name="htlfndr-kids" id="htlfndr-kids" class="htlfndr-dropdown" style="display: none;"> <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> </select><span class="ui-selectmenu-button ui-widget ui-state-default ui-corner-all" tabindex="0" id="htlfndr-kids-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="htlfndr-kids-menu" aria-haspopup="true" style="width: 74px;"><span class="ui-icon ui-icon-triangle-1-s"></span><span class="ui-selectmenu-text">1</span></span> </div> </section>
+                        <input type="submit" value="search" class="btn-primary">
+                    </form>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

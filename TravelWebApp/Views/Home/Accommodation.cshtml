@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_TravelLayout.cshtml";
 }
 
++
 <style>
     .property {
         display: inline-block;
@@ -12,11 +13,12 @@
         box-shadow: 0 2px 2px #ccc;
         width: 500px;
         padding: 20px;
+        background-color: azure
     }
 </style>
 
-<section class="ftco-section ftco-no-pb ftco-no-pt">
-    <div class="row" style="background-color:#fff">
+<section>asdfasf
+    <div class="row" style="background-color: #fff">
         <div class="col-md-12">
             <h1 style="text-align: center; color: #cccccc">@ViewBag.Title</h1>
 
@@ -24,40 +26,126 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-md-3" style="border: #cccccc; border-style: groove; border-color: darkgreen">
+        <div class="col-md-3">
             <div class="form-group">
-                <label for="accom_destination">Destination</label>
-                <input type="text" id="accom_destination" placeholder="...where to ?" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="accom_arrival">Arrival Date</label>
-                <br />
-                <input id="accom_arrival" type="text" placeholder="Arrival date" class="form-group datepicker"/>
-            </div>
-            <div class="form-group">
-                <label for="accom_departure">Departure Date</label>
-                <br />
-                <input id="accom_departure" class="form-group datepicker" placeholder="Departure date" type="text"/>
-            </div>
-            <div class="form-group">
-                <input type="button" id="btn_accom_submit" value="Submit" class="btn btn-block btn-success"/>
+                <label for="search_place">Destination</label>
+                <input type="text" id="search_place" placeholder="where to ?" class="form-control" />
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="check_in_date">Check-in</label>
+                <br />
+                <input id="check_in_date" type="date" placeholder="Arrival date" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="check_out_date">Check-out</label>
+                <br />
+                <input id="check_out_date" class="form-control datepicker" placeholder="Departure date" type="text" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="margin-top: 35px">
+                <input type="button" id="btn_accom_submit" style="height: 45px" value="Search" class="btn btn-block btn-success" />
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div id="booking_results">
+                <br />
+                <table id="result_table" class="table table-hover display" style="display: none" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Review</th>
+                            <th>Currency</th>
+                            <th>Price</th>
+                            <th>Rooms</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
-        <div class="col-md-2" style="border: #cccccc; border-style: groove;border-color: darkgreen">
-            
-        </div>
+
     </div>
 </section>
 
 @section scripts
 {
     <script type="text/javascript">
+
+        function convertDate(date) {
+            var dateCopy = date.split('/');
+            var newDateString = dateCopy[2] + "-" + dateCopy[0] + "-" + dateCopy[1];
+
+            return newDateString;
+        }
+
         $("#btn_accom_submit").click(function() {
-            alert("");
+
+            //$('#booking').modal('show');
+            //var $this = $(this);
+            //$this.button('loading');
+            //setTimeout(function() {
+            //        $this.button('reset');
+            //    },
+            //    8000);
+
+            var checkOut = convertDate($('#check_out_date').val());
+            var checkIn = convertDate($('#check_in_date').val());
+            var place = $('#search_place').val();
+            var priceLimit = $('#price_limit option:selected').text();
+
+            $.ajax({
+                type: "GET",
+                url: "/bookingmanagement/GetPropertyList/",
+                contentType: "application/json; charset=utf-8",
+                data: { destination: place, arrivalDate: checkIn, departureDate: checkOut },
+                dataType: "json",
+                success: function(obj) {
+                    $('#booking-hotel').modal('hide');
+                    $('#booking').modal('hide');
+                    //$('#result_table').attr('style', "display:block;");
+                    var results = obj.Properties;
+                    var count = obj.Count;
+                    $('#results_title').attr('style', 'display:block;');
+                    //$("#result_table").DataTable({
+                    //    "data": results,
+                    //    "columns": [
+                    //        { "data": "HotelName" },
+                    //        { "data": "Review" },
+                    //        { "data": "CurrencyCode" },
+                    //        { "data": "MinimumPrice" },
+                    //        { "data": "AvailableRooms" },
+                    //        { "data": "Url" }
+                    //    ]
+                    //}); 
+                    if (count > 0) {
+                        $.each(obj.Properties,
+                            function(index, value) {
+                                $('#booking_results').append(
+                                    `<div class="property">
+                                     ${value.HotelName}
+                                    <br/>
+                                     Review: ${value.Review}
+                                     <div class="img">
+                                      <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl}" style="" class="img-fluid"></img></a>
+                                    </div>
+                                    <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
+                                </div>`
+                                );
+                            });
+                    }
+
+                }
+
+            });
+
         });
     </script>
 }
