@@ -15,15 +15,15 @@
 </style>
 
 @*<div class="call-to-action">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <h3>We provide online booking</h3>
-                <a href="#" class="btn booking-btn text-center" data-toggle="modal" data-target="#sign_in">Click for Booking !</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <h3>We provide online booking</h3>
+                    <a href="#" class="btn booking-btn text-center" data-toggle="modal" data-target="#sign_in">Click for Booking !</a>
+                </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 <div class="modal fade" id="sign_in" tabindex="-1" role="dialog" aria-labelledby="sign-in" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -137,26 +137,48 @@
         </tr>
     </thead>
 </table>
-<div class="row">
-    <div class="col-md-12">
-        
-    </div>
-</div>
 
-<div class="row">
-    <div id="booking_results">
+<section style="background-color: lightgrey;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <h2> Find deals </h2>
+            </div>
+        </div>
+        <br/>
     </div>
-</div>
-
+</section>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <ins class="bookingaff" data-aid="1831208" data-target_aid="1831208" data-prod="dfl2" data-width="410" data-height="300" data-lang="en" data-dest_id="-1217214" data-dest_type="city" data-df_num_properties="3">
+                    <!-- Anything inside will go away once widget is loaded. -->
+                    <a href="//www.booking.com?aid=1831208">Booking.com</a>
+                </ins>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section scripts
 {
+
     <script src="~/Scripts/SignalR.js">
     </script>
-    
+
     <script type="text/javascript">
 
-        $('.nav-item a').click(function() {
+        (function (d, sc, u) {
+            var s = d.createElement(sc), p = d.getElementsByTagName(sc)[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = u + '?v=' + (+new Date());
+            p.parentNode.insertBefore(s, p);
+        })(document, 'script', '//aff.bstatic.com/static/affiliate_base/js/flexiproduct.js');
+
+        $('.nav-item a').click(function () {
             $('.active').removeClass('nav-item active');
             console.log($(this));
             $(this).addClass("nav-item active");
@@ -173,7 +195,7 @@
 
             var $this = $(this);
             $this.button('loading');
-            setTimeout(function() {
+            setTimeout(function () {
                 $this.button('reset');
             }, 8000);
 
@@ -186,9 +208,9 @@
                 type: "GET",
                 url: "/bookingmanagement/GetPropertyList/",
                 contentType: "application/json; charset=utf-8",
-                data: {destination: place, arrivalDate: checkIn, departureDate: checkOut},
+                data: { destination: place, arrivalDate: checkIn, departureDate: checkOut },
                 dataType: "json",
-                success: function(obj) {
+                success: function (obj) {
                     $('#booking-hotel').modal('hide');
                     $('#result_table').attr('display:', "block;");
                     //console.log(obj.Properties);
@@ -197,13 +219,13 @@
                     $("#result_table").DataTable({
                         "data": results,
                         "columns": [
-                            {"data" : "HotelName"},
-                            {"data" : "Review"},
-                            {"data" : "CurrencyCode" },
-                            {"data" : "MinimumPrice"},
-                            {"data" : "AvailableRooms"},
-                            {"data" : "Url"}
-                            ]
+                            { "data": "HotelName" },
+                            { "data": "Review" },
+                            { "data": "CurrencyCode" },
+                            { "data": "MinimumPrice" },
+                            { "data": "AvailableRooms" },
+                            { "data": "Url" }
+                        ]
                     });
                     //$.each(obj.Properties.Result,
                     //    function (index, value) {
@@ -214,16 +236,16 @@
                     //                 ${value.HotelName}
                     //                 ${value.Review}
                     //                 <div class="img">
-                    //                    <img src="${value.PhotoUrl}" class="img-fluid"></img>                                       
-                    //                </div>   
-                    //                <p>${value.MinimumPrice}</p>                                     
+                    //                    <img src="${value.PhotoUrl}" class="img-fluid"></img>
+                    //                </div>
+                    //                <p>${value.MinimumPrice}</p>
                     //            </div>`
                     //        );
                     //    });
                 }
 
             });
-            
+
         });
         $("#search_plac").focus();
     </script>

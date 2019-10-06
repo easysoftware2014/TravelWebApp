@@ -247,7 +247,7 @@ namespace TravelWebApp.Controllers
 
         public ActionResult FlightResults(string results)
         {
-            return View();
+            return View(" ");
         }
     }
 }

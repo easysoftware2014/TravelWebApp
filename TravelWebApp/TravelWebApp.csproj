@@ -495,6 +495,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\about-1.jpg" />
     <Content Include="Images\about.jpg" />
+    <Content Include="Images\atmospheric-background-beautiful-531872.jpg" />
+    <Content Include="Images\background-calm-clouds-747964.jpg" />
     <Content Include="Images\bg_1.jpg" />
     <Content Include="Images\bg_2.jpg" />
     <Content Include="Images\destination-1.jpg" />
@@ -509,6 +511,7 @@
     <Content Include="Images\destination-7.jpg" />
     <Content Include="Images\destination-8.jpg" />
     <Content Include="Images\destination-9.jpg" />
+    <Content Include="Images\hero1.jpeg" />
     <Content Include="Images\hotel-resto-1.jpg" />
     <Content Include="Images\hotel-resto-2.jpg" />
     <Content Include="Images\hotel-resto-3.jpg" />

@@ -13,50 +13,57 @@
         box-shadow: 0 2px 2px #ccc;
         width: 800px;
         padding: 20px;
+        background-color: lightgrey
     }
+
     .text-color {
         color: #373737
     }
 </style>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3 style="color: lightgreen"><i class="fa fa-home"></i> @ViewBag.Title</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="color: lightgreen"><i class="fa fa-home"></i> @ViewBag.Title</h3>
+        </div>
     </div>
 </div>
 <br />
-<div class="row">
-    <div class="col-md-3">
-        <div class="form-group">
-            
-            <input type="text" id="search_place" placeholder="Destination" class="form-control" />
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
+<br />
 
-            <input id="check_in_date" type="text" placeholder="Arrival date" class="form-control datepicker" />
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <input id="check_out_date" class="form-control datepicker" placeholder="Departure date" type="text" />
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group"style="margin-top: -35px">
-            <button id="btn_accom_submit" type="button" style="height: 50px; width: 100%" class="btn btn-success"><i class="fa-hotel"></i> Search</button>
-        </div>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
 
+                <input type="text" id="search_place" placeholder="Destination" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+
+                <input id="check_in_date" type="text" placeholder="Arrival date" class="form-control datepicker" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input id="check_out_date" class="form-control datepicker" placeholder="Departure date" type="text" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="margin-top: -35px">
+                <button id="btn_accom_submit" type="button" style="height: 50px; width: 200px" class="btn btn-success"> Search</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 @*<div class="row">
-    <div class="col-md-12">
-        <div id="booking_results">
-            <br />
+        <div class="col-md-12">
+            <div id="booking_results">
+                <br />
+            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 @*<aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" role="complementary">
         <div class="htlfndr-modify-search-aside widget">
             <h3 style="background-color: transparent"> @ViewBag.Title</h3>
@@ -137,9 +144,10 @@
         }
 
         $("#btn_accom_submit").click(function () {
+            $(this).html('loading...');
             $('#booking_results').empty();
-            $('#booking').modal('show');
-            //$('#spinner').attr('style', 'display:block;');
+            //$('#booking').modal('show');
+            //$('#show_spinner').attr('style', 'display:block;');
 
             var $this = $(this);
             $this.button('loading');
@@ -159,9 +167,10 @@
                 data: { destination: place, arrivalDate: checkIn, departureDate: checkOut },
                 dataType: "json",
                 success: function (obj) {
+                    $('#btn_accom_submit').html('SEARCH');
                     $('#booking-hotel').modal('hide');
                     $('#booking').modal('hide');
-                    $('#spinner').attr('style', 'display:none;');
+                    $('#show_spinner').attr('style', 'display:none;');
                     //$('#result_table').attr('style', "display:block;");
                     var results = obj.Properties;
                     var count = obj.Count;
@@ -178,23 +187,27 @@
                     //    ]
                     //});
                     if (count > 0) {
-                        $('#aside').attr('style', 'display:block;');
+                        $('#aside').attr('style', 'display:block; margin-left: -45px');
+                        $("#search_place_copy").val(place);
+                        $("#check_in_date_copy").val(checkIn);
+                        $("#check_out_date_copy").val(checkOut);
+
                         $.each(obj.Properties,
                             function (index, value) {
                                 $('#booking_results').append(
                                     `<div class="property">
-                                                     <div class="text-center">
-                                                         <h3>${value.HotelName}</h3>
-                                                     </div
-                                                     <br/>
-                                                     <div style="text-align: center">
-                                                     Review: ${value.Review}
-                                                     <div class="img">
-                                                         <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl}" style="" class="htlfndr-hotel-gallery img"></img></a>
-                                                     </div>
-                                                     </br>
-                                                         <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
-                                                 </div>`
+                                                                         <div class="text-center">
+                                                                             <h3>${value.HotelName}</h3>
+                                                                         </div
+                                                                         <br/>
+                                                                         <div style="text-align: center">
+                                                                         Review: ${value.Review}
+                                                                         <div class="img">
+                                                                             <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl}" style="" class="htlfndr-hotel-gallery img"></img></a>
+                                                                         </div>
+                                                                         </br>
+                                                                             <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
+                                                                     </div>`
                                 );
                             });
                     }

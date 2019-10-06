@@ -9,88 +9,86 @@
         margin: 10px;
         border: 1px solid #eee;
         box-shadow: 0 2px 2px #ccc;
-        width: 500px;
+        width: 800px;
         padding: 20px;
-        background-color: azure
+    }
+
+    .paragraph {
+        font-weight: bold;
+        color: darkgreen
     }
 </style>
-
-<div class="row">
-    <div class="col-md-12">
-        <h3 style="color: lightgreen;"> <i class=" fas fa-plane"></i> @ViewBag.Title</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="color: lightgreen;"> <i class=" fas fa-plane"></i> @ViewBag.Title</h3>
+        </div>
     </div>
 </div>
 <br />
-<div class="row">
-    <div class="col-sm-12">
-        <label> Trip Type</label>
-        <br/>
-        <div class="radio">
-            <label><input type="radio" class="trip_type" value="0" name="tripradio" checked> One way</label>
-            <label><input type="radio" class="trip_type" value="1" name="tripradio"> Return</label>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="radio">
+                <label><input type="radio" class="trip_type" value="0" name="tripradio" checked> One way</label>
+                <label><input type="radio" class="trip_type" value="1" name="tripradio"> Return</label>
+            </div>
+            @*<select id="tripType" class="form-control selected dropdown-backdrop">
+                    <option value="0" selected="selected">One way</option>
+                    <option value="1">Return</option>
+                </select>*@
         </div>
-        @*<select id="tripType" class="form-control selected dropdown-backdrop">
-            <option value="0" selected="selected">One way</option>
-            <option value="1">Return</option>
-        </select>*@
     </div>
 </div>
-<br/>
-<div class="row">
-    <div class="col-md-2">
-        <div class="form-group">
-            <input type="text" id="origin_place" placeholder="from" class="form-control" />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="text" id="origin_place" placeholder="from" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <input type="text" id="search_place" placeholder="to" class="form-control" />
+        <div class="col-md-2">
+            <div class="form-group">
+                <input type="text" id="search_place" placeholder="to" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <input id="departure_date" class="form-control datepicker" placeholder="Departure" type="text" />
+        <div class="col-md-2">
+            <div class="form-group">
+                <input id="departure_date" class="form-control datepicker" placeholder="Departure" type="text" />
+            </div>
         </div>
-    </div>
-    <div class="col-md-2" style="display: none" id="returnTrip">
-        <div class="form-group">
-            <input id="return_date" type="text" placeholder="Arrival" class="form-control datepicker" />
+        <div class="col-md-2" style="display: none" id="returnTrip">
+            <div class="form-group">
+                <input id="return_date" type="text" placeholder="Arrival" class="form-control datepicker" />
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <select id="classType" class="form-control selected dropdown-backdrop">
-                <option value="0" selected="selected">Economy</option>
-                <option value="1">Business</option>
-            </select>
+        <div class="col-md-2">
+            <div class="form-group">
+                <select id="classType" class="form-control selected dropdown-backdrop">
+                    <option value="0" selected="selected">Economy</option>
+                    <option value="1">Business</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <button style="height: 50px; margin-top: -1px;width: 175px" id="btn_flight_submit" class="btn btn-success"><i class='fas fa-plane'></i> Search</button>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button style="height: 50px; margin-top: -1px;width: 175px" id="btn_flight_submit" class="btn btn-success"><i class='fas fa-plane'></i> Search</button>
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
 <div class="row">
     @*<div class="col-sm-6">
-        <select id="tripType" class="form-control selected dropdown-backdrop">
-            <option value="0" selected="selected">One way</option>
-            <option value="1">Return</option>
-        </select>
-    </div>*@
+            <select id="tripType" class="form-control selected dropdown-backdrop">
+                <option value="0" selected="selected">One way</option>
+                <option value="1">Return</option>
+            </select>
+        </div>*@
     <div class="col-sm-6">
-        
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div id="booking_results">
-            <br />
 
-        </div>
     </div>
-
 </div>
 
 @section scripts
@@ -109,11 +107,10 @@
         $(".trip_type").on('change',
             function () {
                 var tripType = $('input[name=tripradio]:checked').val();
-                
+
                 if (tripType === '1') {
                     $("#returnTrip").attr('style', "display: block;");
-                }
-                else
+                } else
                     $("#returnTrip").attr('style', "display: none;");
             });
 
@@ -141,32 +138,62 @@
                     var results = obj.Flight;
                     //console.log(results);
                     var arr = ($.parseJSON(results));
-
+                    console.log("Arrangement: " + arr.key);
+                    var dataObj = {};
+                    var finalObj = [{}];
                     $.each(arr,
                         function (key, value) {
                             if (key === "data") {
                                 $.each(value,
                                     function (name, dValue) {
-                                        $.each(dValue, function (x, v) {
-                                            $.each(v, function (index, data) {
-                                                console.log(data);
-                                                $('#booking_results').append(
-                                                    `<div class="property">
-                                                                     ${data}
-                                                                    <br/>
-                                                                     Review: ${value.Review}
-                                                                     <div class="img">
-                                                                      <a href="${value.Url}" target="_blank"><img src="${value.PhotoUrl
-                                                    }" style="" class="img-fluid"></img></a>
-                                                                    </div>
-                                                                    <p>Price: ${value.CurrencyCode} ${value.MinimumPrice}</p>
-                                                                </div>`
-                                                );
-                                                //alert(index + " " + data);
+                                        console.log("D Value: " + dValue);
+                                        $.each(dValue,
+                                            function (x, v) {
+                                                $.each(v,
+                                                    function (index, data) {
+                                                        console.log("Data: " + data + " index :" + index);
+                                                        if (index == 'airline') {
+
+                                                            dataObj.airline = data;
+
+                                                        }
+                                                        if (index == 'price') {
+                                                            dataObj.price = data;
+
+                                                        }
+                                                        if (index == 'departure_at') {
+                                                            var date = new Date(data);
+                                                            dataObj.departureDate = date;
+                                                        }
+
+                                                    });
+
+                                                finalObj.push({
+                                                    price: dataObj.price,
+                                                    airline: dataObj.airline,
+                                                    departureDate: dataObj.departureDate
+                                                });
+                                                console.log("Final object: " + finalObj);
                                             });
-                                        });
                                     });
                             }
+                        });
+                    if (finalObj.length > 1)
+                        $('#aside').attr('style', 'display:block;');
+
+                    $.each(finalObj,
+                        function (key, value) {
+                            if (key != 0) {
+                                $("#booking_results").append(
+                                    `<div class="property">
+                                                ${value.airline}
+                                                <br/>
+                                                ${value.price}
+                                                <br/>
+                                                ${value.departureDate}
+                                            </div>`);
+                            }
+
                         });
 
                     var count = obj.Count;
@@ -187,6 +214,24 @@
             });
 
         });
+                    //$.ajax({
+                    //    ...
+                    //    success: function (res) {
+                    //        localStorage.setItem("dataCache", JSON.stringify(res));
+                    //    },
+                    //    ...
+                    //});
+
+                    //var data;
+                    //// This returns null if the item is not in local storage.
+                    //// Since JavaScript is truthy falsy, it will be evaluated as false.
+
+                    //if (localStorage.getItem("dataCache")) {
+                    //    data = JSON.parse(localStorage.getItem("dataCache"));
+                    //} else {
+                    //    // Make ajax call, fetch object and store in localStorage in the success or done callbacks as described above
+                    //}
+
     </script>
 }
 

@@ -26,44 +26,57 @@
     <link rel="stylesheet" href="../../Content/icomoon.css">
     <link rel="stylesheet" href="../../Content/style.css">
     <link rel="stylesheet" href="../../Content/search-results.css" />
+    <style>
+        #home {
+            background: url(~/Images/hero1.jpeg);
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            min-width: 100%;
+            min-height: 100%;
+            height: 100%;
+            width: 100%;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="booking" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <i class="fa fa-spinner fa-spin" style="font-size: 50px; margin-left: 200px; margin-top: 150px"></i>
+    <i class="fa fa-spinner fa-spin" id="show_spinner" style="font-size: 50px; display: none; margin-left: 200px; margin-top: 50px"></i>
+    @*<div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="booking" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <p> Awaiting results...</p>
+                            <i class="fa fa-spinner fa-spin" style="font-size: 50px; margin-left: 200px; margin-top: 50px"></i>
 
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>*@
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-rose ftco-navbar-light" id="ftco-navbar" style="background-color: blue">
+        <div class="container">
+            <a class="" href="/"><span style="font-size: xx-large; font-weight: bolder">Fourier</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="/accommodation" class="nav-link">Accommodation</a></li>
+                    <li class="nav-item"><a href="/flight" class="nav-link">Flight</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
+
+                </ul>
+            </div>
         </div>
-    </div>
-
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-rose ftco-navbar-light" id="ftco-navbar" >
-    <div class="container">
-        <a class="navbar-brand" href="/"><span>Fourier</span></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="oi oi-menu"></span> Menu
-        </button>
-
-        <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="/accommodation" class="nav-link">Accommodation</a></li>
-                <li class="nav-item"><a href="/flight" class="nav-link">Flight</a></li>
-                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="/home/contact" class="nav-link">Contact</a></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-<br />
-    <!-- END nav -->
-    <section class="ftco-section" style="background-image: url('../../Images/destination-4.jpg');">
+    </nav>
+    <section class="ftco-section" id="home"style="">
         <div class="container-fluid">
-            <div class="row" style="padding-left: 170px">
+            <div class="row">
                 <div class="project">
                     @RenderBody()
                 </div>
@@ -73,53 +86,31 @@
 
     <div class="container">
         <div class="row">
-            <aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" id="aside" style="display: none" role="complementary">
+            <aside class="col-sm-4 col-md-3 col-lg-3 htlfndr-sidebar-left" id="aside" style="display: none;" role="complementary">
                 <div class="htlfndr-modify-search-aside widget">
-                    <h3 style="background-color: transparent"> Search</h3>
+                    <br />
+                    <br />
+                    <h3 style="background-color: transparent"> Search Results</h3>
                     <div class="htlfndr-widget-content">
                         <form name="search-hotel" id="search-hotel">
                             <label for="htlfndr-city" class="htlfndr-input-label">Your destination</label>
-                            <div id="htlfndr-input-1" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-city" id="search_place" class="form-control" placeholder="Enter city, region"> </div>
-                            <div class="htlfndr-float-input first-float"> <label for="htlfndr-date-in" class="htlfndr-input-label">Check in</label> <div id="htlfndr-input-date-in" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-in" id="check_in_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
-                            <div class="htlfndr-float-input"> <label for="htlfndr-date-out" class="htlfndr-input-label">Check out</label> <div id="htlfndr-input-date-out" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-out" id="check_out_date" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div> </div>
-                            <section class="htlfndr-select-block">
-                                <div class="htlfndr-input-wrapper htlfndr-small-select">
-                                    <label for="htlfndr-room-button" class="htlfndr-input-label">Room</label>
-                                    <select name="htlfndr-room" id="htlfndr-room" class="form-control dropdown" style="display: block;">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                                <div class="htlfndr-input-wrapper htlfndr-small-select">
-                                    <label for="htlfndr-adult-button" class="htlfndr-input-label">Adult</label>
-                                    <select name="htlfndr-adult" id="htlfndr-adult" class="form-control dropdown" style="display: block;">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                                <div class="htlfndr-input-wrapper htlfndr-small-select">
-                                    <label for="htlfndr-kids-button" class="htlfndr-input-label">Kids</label>
-                                    <select name="htlfndr-kids" id="htlfndr-kids" class="form-control dropdown" style="display: block;">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                            </section>
-                            <div class="form-group">
-                                <button id="btn_accom_submit" type="button" style="height: 45px; width: 100%" class="btn btn-outline-success"><i class="fa-hotel"></i> Search</button>
+                            <div id="htlfndr-input-1" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-city" id="search_place_copy" class="form-control" placeholder="Enter city, region"> </div>
+                            <div class="htlfndr-float-input first-float">
+                                <label for="htlfndr-date-in" class="htlfndr-input-label">Check in</label>
+                                <div id="htlfndr-input-date-in" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-in" id="check_in_date_copy" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div>
+                            </div>
+                            <div class="htlfndr-float-input">
+                                <label for="htlfndr-date-out" class="htlfndr-input-label">Check out</label>
+                                <div id="htlfndr-input-date-out" class="htlfndr-input-wrapper"> <input type="text" name="htlfndr-date-out" id="check_out_date_copy" class="form-control datepicker"> <button type="button" class="htlfndr-clear-datepicker"></button> </div>
                             </div>
 
                         </form>
                     </div>
                 </div>
             </aside>
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="margin-left: 100px;">
+                <br />
+                <br />
                 <div id="booking_results">
                     <br />
                 </div>
@@ -129,7 +120,7 @@
     </div>
 
 
-    <section class="ftco-section">
+    @*<section class="ftco-section">
         <div class="container">
             <div class="row">
                 <div class="project">
@@ -138,7 +129,17 @@
             </div>
 
         </div>
-    </section>
+    </section>*@
+    @*<section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+
+                </div>
+            </div>
+
+        </div>
+    </section>*@
 
     <section class="ftco-subscribe" style="background-image: url('/images/bg_1.jpg');">
         <div class="overlay">
@@ -261,6 +262,15 @@
             dateFormat: 'YYYY-MM-dd'
         });
 
+    </script>
+    <script type="text/javascript">
+        (function (d, sc, u) {
+            var s = d.createElement(sc), p = d.getElementsByTagName(sc)[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = u + '?v=' + (+new Date());
+            p.parentNode.insertBefore(s, p);
+        })(document, 'script', '//aff.bstatic.com/static/affiliate_base/js/flexiproduct.js');
     </script>
 
 </body>
